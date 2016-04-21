@@ -1,0 +1,5 @@
+PSTART
+FDEC MAIN
+PRIN "Hello World"
+FEND
+PEND

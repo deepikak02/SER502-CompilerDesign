@@ -1,0 +1,6 @@
+PSTART
+	MSTA 
+		PRIN "Hello World"
+		STOR a 10
+	MEND
+PEND

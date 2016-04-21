@@ -1,0 +1,5 @@
+PSTART
+	MSTA 
+		PRIN "Hello World"
+	MEND
+PEND
