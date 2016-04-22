@@ -271,24 +271,24 @@ public class Instruction {
 					conditionCheck = 0;
 				}
 			} 
-		}
-		else if ("IFLT".equals(keyword) && !(conditionCheck == -1)) {
+			else if ("IFLT".equals(keyword) && !(conditionCheck == -1)) {
 				condnTrue = false;
 		} else if ("IFGT".equals(keyword) && !(conditionCheck == 1)) {
 				condnTrue = false;
 		} else if ("IFEQ".equals(keyword) && !(conditionCheck == 0)) {
 				condnTrue = false;
 		}
-			if ("IFLT".equals(keyword) && (conditionCheck == -1)) {
-				condnTrue = true;
-			} else if ("IFGT".equals(keyword) && (conditionCheck == 1)) {
-				condnTrue = true;
-			} else if ("IFEQ".equals(keyword) && (conditionCheck == 0)) {
-				condnTrue = true;
-			}
-			else if (keyword.contains("END")) {
-				condnTrue = true;
-			}
+		}
+		if ("IFLT".equals(keyword) && (conditionCheck == -1)) {
+			condnTrue = true;
+		} else if ("IFGT".equals(keyword) && (conditionCheck == 1)) {
+			condnTrue = true;
+		} else if ("IFEQ".equals(keyword) && (conditionCheck == 0)) {
+			condnTrue = true;
+		}
+		else if (keyword.contains("END")) {
+			condnTrue = true;
+		}
 		return null;
 	}	
 	public String getInstruction() {
