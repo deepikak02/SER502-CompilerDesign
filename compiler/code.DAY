@@ -1,0 +1,4 @@
+string a = "text";
+START
+string b = "text"; 
+END
