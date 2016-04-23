@@ -48,7 +48,7 @@ public class Instruction {
 		}
 		if(currentBlock == null && globalSymbolTable.containsKey(value)) 
 			return globalSymbolTable;
-		else {throw new Exception("data not found");}		
+		else {throw new Exception("data not found for variable-"+value);}		
 		
 	}
 	
@@ -183,7 +183,7 @@ public class Instruction {
 				if (this.getValues().contains("ans")) {
 					Variable returnValue = block.execute();
 					ans = returnValue;
-					System.out.println(ans.getValue());
+					//System.out.println(ans.getValue());
 				} else {
 					block.execute();
 				}
@@ -233,6 +233,10 @@ public class Instruction {
 					ope2 = symbltbl.get(operand2);
 
 				}
+				Object c = Integer.parseInt("10");
+				Object a = Integer.parseInt("10");
+				Object b = a.equals(c);
+				
 				int opeInt1 = Integer.parseInt(ope1.getValue());
 				int opeInt2 = Integer.parseInt(ope2.getValue());
 				Integer result = opeInt1+opeInt2;
@@ -240,7 +244,83 @@ public class Instruction {
 						globalSymbolTable, tempStack, ans);
 				symbltbl.put(ans, new Variable(
 						ope2.getDataType(), result.toString()));
-			}else if ("JMP".equals(keyword)) {
+			}
+			else if("SUB".equals(keyword)){
+				String ans = this.getValues().get(0);
+				String operand1 = this.getValues().get(1);
+				String operand2 = this.getValues().get(2);
+				Variable ope1 = null;
+				if (Variable.getTypeInfo(operand1) == Type.IDENTIFIER) {
+					symbltbl = this.getSymblTbl(currentBlock,
+							globalSymbolTable, tempStack, operand1);
+					ope1 = symbltbl.get(operand1);
+				}
+				Variable ope2 = null;
+				if (Variable.getTypeInfo(operand2) == Type.IDENTIFIER) {
+					symbltbl = this.getSymblTbl(currentBlock,
+							globalSymbolTable, tempStack, operand2);
+					ope2 = symbltbl.get(operand2);
+
+				}
+				int opeInt1 = Integer.parseInt(ope1.getValue());
+				int opeInt2 = Integer.parseInt(ope2.getValue());
+				Integer result = opeInt1-opeInt2;
+				symbltbl = this.getSymblTbl(currentBlock,
+						globalSymbolTable, tempStack, ans);
+				symbltbl.put(ans, new Variable(
+						ope2.getDataType(), result.toString()));
+			}
+			else if("MUL".equals(keyword)){
+				String ans = this.getValues().get(0);
+				String operand1 = this.getValues().get(1);
+				String operand2 = this.getValues().get(2);
+				Variable ope1 = null;
+				if (Variable.getTypeInfo(operand1) == Type.IDENTIFIER) {
+					symbltbl = this.getSymblTbl(currentBlock,
+							globalSymbolTable, tempStack, operand1);
+					ope1 = symbltbl.get(operand1);
+				}
+				Variable ope2 = null;
+				if (Variable.getTypeInfo(operand2) == Type.IDENTIFIER) {
+					symbltbl = this.getSymblTbl(currentBlock,
+							globalSymbolTable, tempStack, operand2);
+					ope2 = symbltbl.get(operand2);
+
+				}
+				int opeInt1 = Integer.parseInt(ope1.getValue());
+				int opeInt2 = Integer.parseInt(ope2.getValue());
+				Integer result = opeInt1*opeInt2;
+				symbltbl = this.getSymblTbl(currentBlock,
+						globalSymbolTable, tempStack, ans);
+				symbltbl.put(ans, new Variable(
+						ope2.getDataType(), result.toString()));
+			}
+			else if("DIV".equals(keyword)){
+				String ans = this.getValues().get(0);
+				String operand1 = this.getValues().get(1);
+				String operand2 = this.getValues().get(2);
+				Variable ope1 = null;
+				if (Variable.getTypeInfo(operand1) == Type.IDENTIFIER) {
+					symbltbl = this.getSymblTbl(currentBlock,
+							globalSymbolTable, tempStack, operand1);
+					ope1 = symbltbl.get(operand1);
+				}
+				Variable ope2 = null;
+				if (Variable.getTypeInfo(operand2) == Type.IDENTIFIER) {
+					symbltbl = this.getSymblTbl(currentBlock,
+							globalSymbolTable, tempStack, operand2);
+					ope2 = symbltbl.get(operand2);
+
+				}
+				int opeInt1 = Integer.parseInt(ope1.getValue());
+				int opeInt2 = Integer.parseInt(ope2.getValue());
+				Integer result = opeInt1/opeInt2;
+				symbltbl = this.getSymblTbl(currentBlock,
+						globalSymbolTable, tempStack, ans);
+				symbltbl.put(ans, new Variable(
+						ope2.getDataType(), result.toString()));
+			}
+			else if ("JMP".equals(keyword)) {
 				loopName = this.getValues().get(0);
 				Block executeBlock = RunTime.blocks.get(loopName);
 				executeBlock.execute();
