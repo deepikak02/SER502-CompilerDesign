@@ -1,0 +1,10 @@
+PSTART
+	Decl a	
+	FDEC EXAMPLE a b 
+	PRINT a
+	PRINT b
+	FEND
+	FDEC MAIN 
+	PRINT "Hello World"
+	FEND
+PEND
