@@ -1,0 +1,8 @@
+START
+	print "Single "
+	print "Line "
+	println "print "
+	print "Double Line Print: "
+	println "Hello "
+	println "World"
+END

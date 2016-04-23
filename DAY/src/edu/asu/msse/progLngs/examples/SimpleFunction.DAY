@@ -3,14 +3,24 @@ numb b;
 bool c = true;
 bool d;
 string e = "string example1";
+func example()
+{
+	numb o = 69;
+	bool p = c;
+	string q = "String example2";
+	string r = e;	
+	println o;
+	println p;
+	println q;	
+	println r;
+}
 START
 	numb i = -20;
 	bool j = false;
 	string k = "string example2";
 	string l;
-	numb m = a;
-	bool n = c;
-	string o = k;
+	numb s;
+	s=a;
 	println a;
 	println b;
 	println c;
@@ -20,11 +30,8 @@ START
 	println j;
 	println k;
 	println l;
-	println m;
-	println n;
-	println o;
-	m=b;
-	println m;
+	println s;
+	call example();
 END
 
 

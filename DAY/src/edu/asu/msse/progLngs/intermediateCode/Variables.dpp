@@ -1,0 +1,39 @@
+PSTART
+	DECLi a
+	STOR a,10
+	DECLi b
+	DECLb c
+	STOR c,true
+	DECLb d
+	DECLs e
+	STOR e,"string example1"
+FDEC MAIN
+	DECLi i
+	STOR i,-20
+	DECLb j
+	STOR j,false
+	DECLs k
+	STOR k,"string example2"
+	DECLs l
+	DECLi m
+	STOR m,a
+	DECLb n
+	STOR n,c
+	DECLs o
+	STOR o,k
+	PRINLN a
+	PRINLN b
+	PRINLN c
+	PRINLN d
+	PRINLN e
+	PRINLN i
+	PRINLN j
+	PRINLN k
+	PRINLN l
+	PRINLN m
+	PRINLN n
+	PRINLN o 
+	STOR m,b
+	PRINLN m
+FEND
+PEND	

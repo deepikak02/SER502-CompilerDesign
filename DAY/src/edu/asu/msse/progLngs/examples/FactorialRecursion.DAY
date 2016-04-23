@@ -1,0 +1,12 @@
+func fact(numb m)
+{
+	if(m<=1)
+		return m;
+	else
+		return m * call fact(m-1);
+}
+START
+	numb x = 5;
+	y = call fact(x);
+	println y;
+END

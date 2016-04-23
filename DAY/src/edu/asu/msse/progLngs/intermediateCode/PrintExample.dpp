@@ -1,0 +1,10 @@
+PSTART
+FDEC MAIN	
+	PRIN "Single Line Print: "
+	PRIN "Hello "
+	PRINLN "World"	
+	PRIN "Double Line Print:  "
+	PRINLN "Hello "
+	PRIN "World"
+FEND	
+PEND
