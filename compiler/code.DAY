@@ -1,4 +1,7 @@
 string a = "text";
+numb c = 10;
+numb e;
+boolean k = true;
 START
 string b = "text"; 
 END

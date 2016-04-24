@@ -1,32 +1,35 @@
 grammar DAY;
 
-prog : (vardecl = vardeclaration |  fdecl = funcdeclaration) *  main = mainblock;
+prog : 	(declaration)* 
+		mainblock
+		;
+		
+declaration : vardeclaration 
+			| funcdeclaration 
+			;
 	 
-vardeclaration : idec = intdecl 
-			   | bdec = booldecl 
-			   | sdec = stringdecl;
+vardeclaration : intdecl
+			   | booldecl 
+			   | stringdecl 
+			   ;
+			   
+mainblock: 'START' statement 'END';
 
-intdecl : ('numb')? IDENTIFIER ('=' (NUMBVALUE|expr|funccall))? ';';
+statement : vardeclaration #vdec_statement
+		  | print #label_print
+		  | funccall #fcall
+		  | condnstatement #cstate
+		  | loop #label_loop
+		  | ret #return 
+		  ; 
 
-booldecl : ('boolean')? IDENTIFIER ('=' boolvalue)? ';';
+stringdecl : ('string')? var=IDENTIFIER ('=' val=STRINGVALUE )? ';';
 
-stringdecl : ('string')? IDENTIFIER ('=' STRINGVALUE )? ';';
+intdecl : ('numb')? var=IDENTIFIER ('=' (numb_val = NUMBVALUE|expr|funccall))? ';';
 
-funcdeclaration : 'method' IDENTIFIER '(' argument ')' '<-' (type | 'void') block;
+booldecl : ('boolean')? var=IDENTIFIER ('=' val=boolvalue)? ';';
 
-block: '{' statement '}';
-
-ret: 'return' (expr|NUMBVALUE|funccall)';';
-
-mainblock: 'START' s = statement 'END';
-
-statement : vd = vardeclaration|print|funccall|condnstatement|loop|ret;
-
-loop: 'while('condn')'block;
-
-condnstatement: 'if(' (condnstatement|condn) ')'block ( 'else' (condnstatement|block) )?;
-
-condn: expr|IDENTIFIER '==' (NUMBVALUE|STRINGVALUE|boolvalue);
+print: 'print' (expr|NUMBVALUE|STRINGVALUE|boolvalue) ';';
 
 expr: ('-')?additionExp;
 
@@ -36,11 +39,23 @@ multiplyExp: atomExp( '*' atomExp | '/' atomExp)*;
 
 atomExp: (funccall|IDENTIFIER|NUMBVALUE|'(' additionExp ')');
 
-argument : type IDENTIFIER (',' argument)*;
-
 funccall: IDENTIFIER'('parameter')';
 
-print: 'print' (expr|NUMBVALUE|STRINGVALUE|boolvalue) ';';
+funcdeclaration : 'method' IDENTIFIER '(' argument ')' '<-' (type | 'void') block;
+
+argument : type IDENTIFIER (',' argument)*;
+
+block: '{' statement '}';
+
+ret: 'return' (expr|NUMBVALUE|funccall)';';
+
+
+
+loop: 'while('condn')'block;
+
+condnstatement: 'if(' (condnstatement|condn) ')'block ( 'else' (condnstatement|block) )?;
+
+condn: expr|IDENTIFIER '==' (NUMBVALUE|STRINGVALUE|boolvalue);
 
 parameter: (NUMBVALUE|STRINGVALUE|boolvalue|IDENTIFIER|expr) (',' parameter)*;
 
