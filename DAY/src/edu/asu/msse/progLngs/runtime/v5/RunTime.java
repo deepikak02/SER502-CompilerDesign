@@ -14,22 +14,28 @@ public class RunTime {
 	/**
 	 * blocks - global variable which holds references for all function, if, while etc blocks
 	 */
-	public static final HashMap<String,Block> blocks = new HashMap<>(); 
+	public static final HashMap<String,Block> blocks = new HashMap<String,Block>(); 
 	
 	/**
 	 * globalSymbolTable - global variable which holds all global variables
 	 */	
-	public static final HashMap<String,Object> globalSymbolTable = new HashMap<>(); 
+	public static final HashMap<String,Object> globalSymbolTable = new HashMap<String,Object>(); 
 	
 	/**
 	 * tempStack - Stack used by function calls and expression evaluations
 	 */
-	public static final Stack<Object> tempStack= new Stack<>(); 
+	public static final Stack<Object> tempStack= new Stack<Object>(); 
 	
 	/**
 	 * localSymblTbl - Stack used to store HashMap of local variables according to the scope
 	 */	
-	public static final Stack<BlockValues> localSymblTbl = new Stack<>();
+	public static final Stack<BlockValues> localSymblTbl = new Stack<BlockValues>();
+	
+
+	/**
+	 * temp registers - to note temporary evaluated values
+	 */
+	public static final String[] tempRegisters = new String[2];
 	
 	/**
 	 * intDefaultValue - default value for integer variables
@@ -60,9 +66,10 @@ public class RunTime {
 		}*/
 		try{
 			
-			String path = "E:\\Visu\\ASU\\SecondSem\\prgmngLangs\\LanguageDevelopment\\EclipseWorkspace\\DAY\\src\\edu\\asu\\msse\\progLngs\\intermediateCode\\";
+			//String path = "E:\\Visu\\ASU\\SecondSem\\prgmngLangs\\LanguageDevelopment\\EclipseWorkspace\\DAY\\src\\edu\\asu\\msse\\progLngs\\intermediateCode\\";
+			String path = "C:\\Users\\deepika\\Documents\\GitHub\\SER502-CompilerDesign\\DAY\\src\\edu\\asu\\msse\\progLngs\\intermediateCode\\";
 			//String filename = filepath + args[0];
-			String filepath = path + "FunctionWithRetValue.dpp";
+			String filepath = path + "FactorialRecursion.dpp";
 			if(!(new File(filepath)).isFile())
 				throw new Exception(filepath + " file does not exist.");
 			

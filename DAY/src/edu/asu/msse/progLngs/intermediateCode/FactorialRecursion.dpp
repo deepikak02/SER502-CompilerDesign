@@ -1,18 +1,20 @@
 FDEC fact
 	POP m
 	LE m,1
-	IFT
-		RET m
-	IFF
-		SUB temp1,m,-1
+	IFT F1
+		RET 1
+	ENDC F1	
+	IFF F1
+		SUB temp1,m,1
 		PUSH temp1
 		FCALL fact
-		MUL temp1,m,temp1
-	ENDC
+	ENDC F1
+	MUL temp1,m,temp1
+	PUSH temp1
 FEND
 FDEC MAIN
 	DECLi x
-	STOR x,5
+	STOR x,6
 	PUSH x
 	FCALL fact
 	POP y

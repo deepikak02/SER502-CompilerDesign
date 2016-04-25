@@ -18,7 +18,7 @@ public class Block {
 	
 	Block(){
 		//parentBlock = null;
-		instns = new ArrayList<>();
+		instns = new ArrayList<Instruction>();
 	}
 	
 	public void addToBlock(Instruction instn){

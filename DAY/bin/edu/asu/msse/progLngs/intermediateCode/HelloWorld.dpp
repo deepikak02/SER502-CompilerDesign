@@ -1,5 +1,5 @@
 PSTART
-	MSTA 
+FDEC MAIN 
 		PRIN "Hello World"
-	MEND
+FEND
 PEND

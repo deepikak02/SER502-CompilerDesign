@@ -9,7 +9,7 @@ public class BlockValues {
 	
 	BlockValues(){
 		parentBlock = null;
-		localvars = new HashMap<>();
+		localvars = new HashMap<String, Object>();
 	}
 
 	public BlockValues getParentBlock() {

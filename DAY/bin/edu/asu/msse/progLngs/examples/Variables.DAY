@@ -3,22 +3,28 @@ numb b;
 bool c = true;
 bool d;
 string e = "string example1";
-method example(numb f, bool g, string h) <- void
-{
-	print a;
-	print b;
-	print c;
-	print d;
-	print e;
-	print f;
-	print g;
-	print h;
-}
 START
 	numb i = -20;
 	bool j = false;
 	string k = "string example2";
-	call example(i,j,k);
+	string l;
+	numb m = a;
+	bool n = c;
+	string o = k;
+	println a;
+	println b;
+	println c;
+	println d;
+	println e;
+	println i;
+	println j;
+	println k;
+	println l;
+	println m;
+	println n;
+	println o;
+	m=b;
+	println m;
 END
 
 
