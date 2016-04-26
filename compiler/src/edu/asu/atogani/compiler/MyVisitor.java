@@ -7,90 +7,154 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.asu.atogani.parser.DAYBaseVisitor;
-import edu.asu.atogani.parser.DAYParser.BooldeclContext;
-import edu.asu.atogani.parser.DAYParser.DeclarationContext;
-//import edu.asu.atogani.parser.DAYParser.FdecContext;
+import edu.asu.atogani.parser.DAYParser.AssignmentContext;
+import edu.asu.atogani.parser.DAYParser.DivContext;
+import edu.asu.atogani.parser.DAYParser.EQContext;
+import edu.asu.atogani.parser.DAYParser.Func_call_exprContext;
+import edu.asu.atogani.parser.DAYParser.FunccallContext;
 import edu.asu.atogani.parser.DAYParser.FuncdeclarationContext;
-import edu.asu.atogani.parser.DAYParser.IntdeclContext;
-import edu.asu.atogani.parser.DAYParser.MainblockContext;
+import edu.asu.atogani.parser.DAYParser.GThanEContext;
+import edu.asu.atogani.parser.DAYParser.GthanContext;
+import edu.asu.atogani.parser.DAYParser.LessThanContext;
+import edu.asu.atogani.parser.DAYParser.LessThanEContext;
+import edu.asu.atogani.parser.DAYParser.MinusContext;
+import edu.asu.atogani.parser.DAYParser.MulContext;
+import edu.asu.atogani.parser.DAYParser.NEQContext;
+import edu.asu.atogani.parser.DAYParser.NumbContext;
+import edu.asu.atogani.parser.DAYParser.ParamdecContext;
+import edu.asu.atogani.parser.DAYParser.PlusContext;
 import edu.asu.atogani.parser.DAYParser.PrintContext;
 import edu.asu.atogani.parser.DAYParser.ProgContext;
-//import edu.asu.atogani.parser.DAYParser.SdecContext;
-import edu.asu.atogani.parser.DAYParser.StatementContext;
-import edu.asu.atogani.parser.DAYParser.StringdeclContext;
+import edu.asu.atogani.parser.DAYParser.SelectionContext;
 import edu.asu.atogani.parser.DAYParser.VardeclarationContext;
-//import edu.asu.atogani.parser.DAYParser.VdecContext;
-import edu.asu.atogani.parser.DAYParser.Vdec_statementContext;
+import edu.asu.atogani.parser.DAYParser.VariableContext;
 
 public class MyVisitor extends DAYBaseVisitor <String>{
 	
-	
+	private int selcounter = 0;
+	private Map<String, Integer> variables = new HashMap <>();
 	@Override
 	public String visitProg(ProgContext ctx) {
 		return visitChildren(ctx);
 	}
 	
-	public String visitDeclaration(DeclarationContext ctx) {
-		return visitChildren(ctx);
-	}
-	
-	public String visitVarDeclaration(VardeclarationContext ctx) {
-		return visitChildren(ctx);
-	}
-	@Override
-	public String visitIntdecl(IntdeclContext ctx) {
-		if(ctx.getChildCount() > 3)
-		{
-			return "DECi " + ctx.var.getText() + "\r\n" + "STOR " + ctx.var.getText() + " " + ctx.numb_val.getText();
-		}
-		else{
-			return "DECi " + ctx.var.getText();
-		}
-	
-	}
-	@Override
-	public String visitStringdecl(StringdeclContext ctx) {
-		if(ctx.getChildCount() > 3)
-		{
-			return "DECs " + ctx.var.getText() + "\r\n" + "STOR " + ctx.var.getText() + " " + ctx.val.getText();
-		}
-		else{
-			return "DECs " + ctx.var.getText();
-		}
-	}
-	@Override
-	public String visitBooldecl(BooldeclContext ctx) {
-		if(ctx.getChildCount() > 3)
-		{
-			return "DECb " + ctx.var.getText() + "\r\n" + "STOR " + ctx.var.getText() + " " + ctx.val.getText();
-		}
-		else{
-			return "DECb " + ctx.var.getText();
-		}
-	}
-	
 	@Override
 	public String visitPrint(PrintContext ctx) {
-		return "PRINLN " + 
+		return  visit(ctx.argument) + "\r\n" + "PRINT temp1";
+	}
+	
+	@Override
+	public String visitPlus(PlusContext ctx) {
+		return "ADD temp1," + ctx.left.getText() + "," + ctx.right.getText();  
+	}
+	
+	@Override
+	public String visitMinus(MinusContext ctx) {
+		return "SUB temp1," + ctx.left.getText() + "," + ctx.right.getText();  
+	}
+	
+	@Override
+	public String visitMul(MulContext ctx) {
+		return "MUL temp1," + ctx.left.getText() + "," + ctx.right.getText();  
+	}
+	
+	@Override
+	public String visitDiv(DivContext ctx) {
+		return "DIV temp1," + ctx.left.getText() + "," + ctx.right.getText();  
+	}
+	
+	@Override
+	public String visitNumb(NumbContext ctx) {
+		return ctx.number.getText();
+	}
+	
+	@Override
+	public String visitVariable(VariableContext ctx) {
+		return ctx.var.getText();
+	}
+	
+	@Override
+	public String visitVardeclaration(VardeclarationContext ctx) {
+		variables.put(ctx.var2.getText(),variables.size());
+		return "DECi "+ ctx.var2.getText();
+	}
+	
+	@Override
+	public String visitAssignment(AssignmentContext ctx) {
+		return visit(ctx.expr)+"\r\n"+"STOR " + ctx.var1.getText() +",temp1";
+	}
+	
+	@Override
+	public String visitFunc_call_expr(Func_call_exprContext ctx) {
+		return visit(ctx.funccall());
+	}
+	
+	@Override
+	public String visitFunccall(FunccallContext ctx) {
+		return visit(ctx.args) +"\r\n"+ "FCALL " + ctx.func.getText(); 
 	}
 	
 	@Override
 	public String visitFuncdeclaration(FuncdeclarationContext ctx) {
-		return visitChildren(ctx);
+		String state_list = visit(ctx.stat);
+		return "FDEC " + ctx.func.getText() + " " + visit(ctx.params) +"\r\n" +
+				(state_list == null ? "" : state_list + "\r\n")+ "RET " + visit(ctx.ret) + "\r\nFEND";
 	}
 	
 	@Override
-	public String visitMainblock(MainblockContext ctx) {
-		
-		return "FDEC MAIN" + "\r\n" + visitChildren(ctx)+ "\r\nFEND";
+	public String visitParamdec(ParamdecContext ctx) {
+		int a = ctx.getChildCount();
+		String result = "";
+		for(int i = 0; i < a; i++)
+		{
+			result = result + ctx.getChild(i).getText() + " ";
+		}
+		return result;
 	}
 	
-	public String visitStatement(StatementContext ctx) {
-		return visitChildren(ctx);
+	@Override
+	public String visitSelection(SelectionContext ctx) {
+		String condInst = visit(ctx.condition);
+		String onTrueInst = visit(ctx.onTrue);
+		String onFalseInst = visit(ctx.onFalse);
+		int selNum = selcounter;
+		++selcounter;
+		return condInst + "\r\n" + "IFT F" + selNum + "\r\n" + onTrueInst + "\r\n" + "ENDC F" + selNum + "\r\n" + "IFF F" + selNum + "\r\n" + onFalseInst + "\r\n" + "ENDC F" + selNum;
 	}
 	
+	@Override
+	public String visitLessThan(LessThanContext ctx) {
+		return "LT " + ctx.left.getText() + "," + ctx.right.getText();
+	}
+	
+	@Override
+	public String visitLessThanE(LessThanEContext ctx) {
+		return "LE " + ctx.left.getText() + "," + ctx.right.getText();
+	}
+	
+	@Override
+	public String visitGthan(GthanContext ctx) {
+		return "GT " + ctx.left.getText() + "," + ctx.right.getText();
+	}
+	
+	@Override
+	public String visitGThanE(GThanEContext ctx) {
+		return "GE " + ctx.left.getText() + "," + ctx.right.getText();
+	}
+	
+	@Override
+	public String visitEQ(EQContext ctx) {
+		return "EQ " + ctx.left.getText() + "," + ctx.right.getText();
+	}
+	
+	@Override
+	public String visitNEQ(NEQContext ctx) {
+		return "NEQ " + ctx.left.getText() + "," + ctx.right.getText();
+	}
 	
 	@Override
 	protected String aggregateResult(String aggregate, String nextResult) {
@@ -104,19 +168,5 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 		}
 		return aggregate + "\r\n" + nextResult;
 	}
-	public void write_to_file(String instructions) throws IOException{
-		String text = instructions;
-	    BufferedWriter output = null;
-	    try {
-	        File file = new File("example.dpp");
-	        output = new BufferedWriter(new FileWriter(file));
-	        output.write(text);
-	    } catch ( IOException e ) {
-	        e.printStackTrace();
-	    } finally {
-	      if ( output != null ) {
-	        output.close();
-	      }
-	    }
-	}
+	
 }

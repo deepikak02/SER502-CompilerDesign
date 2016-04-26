@@ -20,32 +20,27 @@ public class DAYParser extends Parser {
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, T__18=19, T__19=20, T__20=21, T__21=22, T__22=23, T__23=24, 
-		T__24=25, T__25=26, T__26=27, IDENTIFIER=28, NUMBVALUE=29, STRINGVALUE=30, 
-		WS=31;
+		IDENTIFIER=25, NUMBER=26, STRING=27, WS=28;
 	public static final int
-		RULE_prog = 0, RULE_declaration = 1, RULE_vardeclaration = 2, RULE_mainblock = 3, 
-		RULE_statement = 4, RULE_stringdecl = 5, RULE_intdecl = 6, RULE_booldecl = 7, 
-		RULE_print = 8, RULE_expr = 9, RULE_additionExp = 10, RULE_multiplyExp = 11, 
-		RULE_atomExp = 12, RULE_funccall = 13, RULE_funcdeclaration = 14, RULE_argument = 15, 
-		RULE_block = 16, RULE_ret = 17, RULE_loop = 18, RULE_condnstatement = 19, 
-		RULE_condn = 20, RULE_parameter = 21, RULE_type = 22, RULE_boolvalue = 23;
+		RULE_prog = 0, RULE_statement = 1, RULE_selection = 2, RULE_block = 3, 
+		RULE_expression = 4, RULE_vardeclaration = 5, RULE_assignment = 6, RULE_funcdeclaration = 7, 
+		RULE_paramdec = 8, RULE_statementlist = 9, RULE_funccall = 10, RULE_expressionlist = 11, 
+		RULE_print = 12;
 	public static final String[] ruleNames = {
-		"prog", "declaration", "vardeclaration", "mainblock", "statement", "stringdecl", 
-		"intdecl", "booldecl", "print", "expr", "additionExp", "multiplyExp", 
-		"atomExp", "funccall", "funcdeclaration", "argument", "block", "ret", 
-		"loop", "condnstatement", "condn", "parameter", "type", "boolvalue"
+		"prog", "statement", "selection", "block", "expression", "vardeclaration", 
+		"assignment", "funcdeclaration", "paramdec", "statementlist", "funccall", 
+		"expressionlist", "print"
 	};
 
 	private static final String[] _LITERAL_NAMES = {
-		null, "'START'", "'END'", "'string'", "'='", "';'", "'numb'", "'boolean'", 
-		"'print'", "'-'", "'+'", "'*'", "'/'", "'('", "')'", "'method'", "'<-'", 
-		"'void'", "','", "'{'", "'}'", "'return'", "'while('", "'if('", "'else'", 
-		"'=='", "'true'", "'false'", null, null, "'\"text\"'"
+		null, "';'", "'if'", "'('", "')'", "'else'", "'{'", "'}'", "'/'", "'*'", 
+		"'+'", "'-'", "'<'", "'<='", "'>'", "'>='", "'=='", "'!='", "'numb'", 
+		"'='", "'method'", "'<-'", "'return'", "','", "'print'"
 	};
 	private static final String[] _SYMBOLIC_NAMES = {
 		null, null, null, null, null, null, null, null, null, null, null, null, 
 		null, null, null, null, null, null, null, null, null, null, null, null, 
-		null, null, null, null, "IDENTIFIER", "NUMBVALUE", "STRINGVALUE", "WS"
+		null, "IDENTIFIER", "NUMBER", "STRING", "WS"
 	};
 	public static final Vocabulary VOCABULARY = new VocabularyImpl(_LITERAL_NAMES, _SYMBOLIC_NAMES);
 
@@ -97,14 +92,17 @@ public class DAYParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ProgContext extends ParserRuleContext {
-		public MainblockContext mainblock() {
-			return getRuleContext(MainblockContext.class,0);
+		public List<StatementContext> statement() {
+			return getRuleContexts(StatementContext.class);
 		}
-		public List<DeclarationContext> declaration() {
-			return getRuleContexts(DeclarationContext.class);
+		public StatementContext statement(int i) {
+			return getRuleContext(StatementContext.class,i);
 		}
-		public DeclarationContext declaration(int i) {
-			return getRuleContext(DeclarationContext.class,i);
+		public List<FuncdeclarationContext> funcdeclaration() {
+			return getRuleContexts(FuncdeclarationContext.class);
+		}
+		public FuncdeclarationContext funcdeclaration(int i) {
+			return getRuleContext(FuncdeclarationContext.class,i);
 		}
 		public ProgContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -124,180 +122,40 @@ public class DAYParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(51);
+			setState(28); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__5) | (1L << T__6) | (1L << T__14) | (1L << IDENTIFIER))) != 0)) {
+			do {
 				{
-				{
-				setState(48);
-				declaration();
+				setState(28);
+				switch (_input.LA(1)) {
+				case T__1:
+				case T__17:
+				case T__23:
+				case IDENTIFIER:
+					{
+					{
+					setState(26);
+					statement();
+					}
+					}
+					break;
+				case T__19:
+					{
+					{
+					setState(27);
+					funcdeclaration();
+					}
+					}
+					break;
+				default:
+					throw new NoViableAltException(this);
 				}
 				}
-				setState(53);
+				setState(30); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
-			setState(54);
-			mainblock();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class DeclarationContext extends ParserRuleContext {
-		public VardeclarationContext vardeclaration() {
-			return getRuleContext(VardeclarationContext.class,0);
-		}
-		public FuncdeclarationContext funcdeclaration() {
-			return getRuleContext(FuncdeclarationContext.class,0);
-		}
-		public DeclarationContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_declaration; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitDeclaration(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final DeclarationContext declaration() throws RecognitionException {
-		DeclarationContext _localctx = new DeclarationContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_declaration);
-		try {
-			setState(58);
-			switch (_input.LA(1)) {
-			case T__2:
-			case T__5:
-			case T__6:
-			case IDENTIFIER:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(56);
-				vardeclaration();
-				}
-				break;
-			case T__14:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(57);
-				funcdeclaration();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class VardeclarationContext extends ParserRuleContext {
-		public IntdeclContext intdecl() {
-			return getRuleContext(IntdeclContext.class,0);
-		}
-		public BooldeclContext booldecl() {
-			return getRuleContext(BooldeclContext.class,0);
-		}
-		public StringdeclContext stringdecl() {
-			return getRuleContext(StringdeclContext.class,0);
-		}
-		public VardeclarationContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_vardeclaration; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitVardeclaration(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final VardeclarationContext vardeclaration() throws RecognitionException {
-		VardeclarationContext _localctx = new VardeclarationContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_vardeclaration);
-		try {
-			setState(63);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(60);
-				intdecl();
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(61);
-				booldecl();
-				}
-				break;
-			case 3:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(62);
-				stringdecl();
-				}
-				break;
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class MainblockContext extends ParserRuleContext {
-		public StatementContext statement() {
-			return getRuleContext(StatementContext.class,0);
-		}
-		public MainblockContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_mainblock; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitMainblock(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final MainblockContext mainblock() throws RecognitionException {
-		MainblockContext _localctx = new MainblockContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_mainblock);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(65);
-			match(T__0);
-			setState(66);
-			statement();
-			setState(67);
-			match(T__1);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__17) | (1L << T__19) | (1L << T__23) | (1L << IDENTIFIER))) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -312,136 +170,80 @@ public class DAYParser extends Parser {
 	}
 
 	public static class StatementContext extends ParserRuleContext {
+		public PrintContext print() {
+			return getRuleContext(PrintContext.class,0);
+		}
+		public VardeclarationContext vardeclaration() {
+			return getRuleContext(VardeclarationContext.class,0);
+		}
+		public AssignmentContext assignment() {
+			return getRuleContext(AssignmentContext.class,0);
+		}
+		public FunccallContext funccall() {
+			return getRuleContext(FunccallContext.class,0);
+		}
+		public SelectionContext selection() {
+			return getRuleContext(SelectionContext.class,0);
+		}
 		public StatementContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_statement; }
-	 
-		public StatementContext() { }
-		public void copyFrom(StatementContext ctx) {
-			super.copyFrom(ctx);
-		}
-	}
-	public static class Vdec_statementContext extends StatementContext {
-		public VardeclarationContext vardeclaration() {
-			return getRuleContext(VardeclarationContext.class,0);
-		}
-		public Vdec_statementContext(StatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitVdec_statement(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class CstateContext extends StatementContext {
-		public CondnstatementContext condnstatement() {
-			return getRuleContext(CondnstatementContext.class,0);
-		}
-		public CstateContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitCstate(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class Label_loopContext extends StatementContext {
-		public LoopContext loop() {
-			return getRuleContext(LoopContext.class,0);
-		}
-		public Label_loopContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitLabel_loop(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class Label_printContext extends StatementContext {
-		public PrintContext print() {
-			return getRuleContext(PrintContext.class,0);
-		}
-		public Label_printContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitLabel_print(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class ReturnContext extends StatementContext {
-		public RetContext ret() {
-			return getRuleContext(RetContext.class,0);
-		}
-		public ReturnContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitReturn(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class FcallContext extends StatementContext {
-		public FunccallContext funccall() {
-			return getRuleContext(FunccallContext.class,0);
-		}
-		public FcallContext(StatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitFcall(this);
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitStatement(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
 	public final StatementContext statement() throws RecognitionException {
 		StatementContext _localctx = new StatementContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_statement);
+		enterRule(_localctx, 2, RULE_statement);
 		try {
-			setState(75);
+			setState(45);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,2,_ctx) ) {
 			case 1:
-				_localctx = new Vdec_statementContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
-				setState(69);
-				vardeclaration();
+				setState(32);
+				print();
+				setState(33);
+				match(T__0);
 				}
 				break;
 			case 2:
-				_localctx = new Label_printContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
-				setState(70);
-				print();
+				setState(35);
+				vardeclaration();
+				setState(36);
+				match(T__0);
 				}
 				break;
 			case 3:
-				_localctx = new FcallContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
-				setState(71);
-				funccall();
+				setState(38);
+				assignment();
+				setState(39);
+				match(T__0);
 				}
 				break;
 			case 4:
-				_localctx = new CstateContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
-				setState(72);
-				condnstatement();
+				setState(41);
+				funccall();
+				setState(42);
+				match(T__0);
 				}
 				break;
 			case 5:
-				_localctx = new Label_loopContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
-				setState(73);
-				loop();
-				}
-				break;
-			case 6:
-				_localctx = new ReturnContext(_localctx);
-				enterOuterAlt(_localctx, 6);
-				{
-				setState(74);
-				ret();
+				setState(44);
+				selection();
 				}
 				break;
 			}
@@ -457,712 +259,50 @@ public class DAYParser extends Parser {
 		return _localctx;
 	}
 
-	public static class StringdeclContext extends ParserRuleContext {
-		public Token var;
-		public Token val;
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public TerminalNode STRINGVALUE() { return getToken(DAYParser.STRINGVALUE, 0); }
-		public StringdeclContext(ParserRuleContext parent, int invokingState) {
+	public static class SelectionContext extends ParserRuleContext {
+		public ExpressionContext condition;
+		public BlockContext onTrue;
+		public BlockContext onFalse;
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public List<BlockContext> block() {
+			return getRuleContexts(BlockContext.class);
+		}
+		public BlockContext block(int i) {
+			return getRuleContext(BlockContext.class,i);
+		}
+		public SelectionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_stringdecl; }
+		@Override public int getRuleIndex() { return RULE_selection; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitStringdecl(this);
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitSelection(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final StringdeclContext stringdecl() throws RecognitionException {
-		StringdeclContext _localctx = new StringdeclContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_stringdecl);
-		int _la;
+	public final SelectionContext selection() throws RecognitionException {
+		SelectionContext _localctx = new SelectionContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_selection);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(78);
-			_la = _input.LA(1);
-			if (_la==T__2) {
-				{
-				setState(77);
-				match(T__2);
-				}
-			}
-
-			setState(80);
-			((StringdeclContext)_localctx).var = match(IDENTIFIER);
-			setState(83);
-			_la = _input.LA(1);
-			if (_la==T__3) {
-				{
-				setState(81);
-				match(T__3);
-				setState(82);
-				((StringdeclContext)_localctx).val = match(STRINGVALUE);
-				}
-			}
-
-			setState(85);
+			setState(47);
+			match(T__1);
+			setState(48);
+			match(T__2);
+			setState(49);
+			((SelectionContext)_localctx).condition = expression(0);
+			setState(50);
+			match(T__3);
+			setState(51);
+			((SelectionContext)_localctx).onTrue = block();
+			setState(52);
 			match(T__4);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class IntdeclContext extends ParserRuleContext {
-		public Token var;
-		public Token numb_val;
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public FunccallContext funccall() {
-			return getRuleContext(FunccallContext.class,0);
-		}
-		public TerminalNode NUMBVALUE() { return getToken(DAYParser.NUMBVALUE, 0); }
-		public IntdeclContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_intdecl; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitIntdecl(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final IntdeclContext intdecl() throws RecognitionException {
-		IntdeclContext _localctx = new IntdeclContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_intdecl);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(88);
-			_la = _input.LA(1);
-			if (_la==T__5) {
-				{
-				setState(87);
-				match(T__5);
-				}
-			}
-
-			setState(90);
-			((IntdeclContext)_localctx).var = match(IDENTIFIER);
-			setState(97);
-			_la = _input.LA(1);
-			if (_la==T__3) {
-				{
-				setState(91);
-				match(T__3);
-				setState(95);
-				_errHandler.sync(this);
-				switch ( getInterpreter().adaptivePredict(_input,7,_ctx) ) {
-				case 1:
-					{
-					setState(92);
-					((IntdeclContext)_localctx).numb_val = match(NUMBVALUE);
-					}
-					break;
-				case 2:
-					{
-					setState(93);
-					expr();
-					}
-					break;
-				case 3:
-					{
-					setState(94);
-					funccall();
-					}
-					break;
-				}
-				}
-			}
-
-			setState(99);
-			match(T__4);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class BooldeclContext extends ParserRuleContext {
-		public Token var;
-		public BoolvalueContext val;
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public BoolvalueContext boolvalue() {
-			return getRuleContext(BoolvalueContext.class,0);
-		}
-		public BooldeclContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_booldecl; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitBooldecl(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final BooldeclContext booldecl() throws RecognitionException {
-		BooldeclContext _localctx = new BooldeclContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_booldecl);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(102);
-			_la = _input.LA(1);
-			if (_la==T__6) {
-				{
-				setState(101);
-				match(T__6);
-				}
-			}
-
-			setState(104);
-			((BooldeclContext)_localctx).var = match(IDENTIFIER);
-			setState(107);
-			_la = _input.LA(1);
-			if (_la==T__3) {
-				{
-				setState(105);
-				match(T__3);
-				setState(106);
-				((BooldeclContext)_localctx).val = boolvalue();
-				}
-			}
-
-			setState(109);
-			match(T__4);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class PrintContext extends ParserRuleContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode NUMBVALUE() { return getToken(DAYParser.NUMBVALUE, 0); }
-		public TerminalNode STRINGVALUE() { return getToken(DAYParser.STRINGVALUE, 0); }
-		public BoolvalueContext boolvalue() {
-			return getRuleContext(BoolvalueContext.class,0);
-		}
-		public PrintContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_print; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitPrint(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final PrintContext print() throws RecognitionException {
-		PrintContext _localctx = new PrintContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_print);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(111);
-			match(T__7);
-			setState(116);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
-			case 1:
-				{
-				setState(112);
-				expr();
-				}
-				break;
-			case 2:
-				{
-				setState(113);
-				match(NUMBVALUE);
-				}
-				break;
-			case 3:
-				{
-				setState(114);
-				match(STRINGVALUE);
-				}
-				break;
-			case 4:
-				{
-				setState(115);
-				boolvalue();
-				}
-				break;
-			}
-			setState(118);
-			match(T__4);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class ExprContext extends ParserRuleContext {
-		public AdditionExpContext additionExp() {
-			return getRuleContext(AdditionExpContext.class,0);
-		}
-		public ExprContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_expr; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ExprContext expr() throws RecognitionException {
-		ExprContext _localctx = new ExprContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_expr);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(121);
-			_la = _input.LA(1);
-			if (_la==T__8) {
-				{
-				setState(120);
-				match(T__8);
-				}
-			}
-
-			setState(123);
-			additionExp();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class AdditionExpContext extends ParserRuleContext {
-		public List<MultiplyExpContext> multiplyExp() {
-			return getRuleContexts(MultiplyExpContext.class);
-		}
-		public MultiplyExpContext multiplyExp(int i) {
-			return getRuleContext(MultiplyExpContext.class,i);
-		}
-		public AdditionExpContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_additionExp; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitAdditionExp(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final AdditionExpContext additionExp() throws RecognitionException {
-		AdditionExpContext _localctx = new AdditionExpContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_additionExp);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(125);
-			multiplyExp();
-			setState(132);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==T__8 || _la==T__9) {
-				{
-				setState(130);
-				switch (_input.LA(1)) {
-				case T__9:
-					{
-					setState(126);
-					match(T__9);
-					setState(127);
-					multiplyExp();
-					}
-					break;
-				case T__8:
-					{
-					setState(128);
-					match(T__8);
-					setState(129);
-					multiplyExp();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				}
-				setState(134);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class MultiplyExpContext extends ParserRuleContext {
-		public List<AtomExpContext> atomExp() {
-			return getRuleContexts(AtomExpContext.class);
-		}
-		public AtomExpContext atomExp(int i) {
-			return getRuleContext(AtomExpContext.class,i);
-		}
-		public MultiplyExpContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_multiplyExp; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitMultiplyExp(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final MultiplyExpContext multiplyExp() throws RecognitionException {
-		MultiplyExpContext _localctx = new MultiplyExpContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_multiplyExp);
-		int _la;
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(135);
-			atomExp();
-			setState(142);
-			_errHandler.sync(this);
-			_la = _input.LA(1);
-			while (_la==T__10 || _la==T__11) {
-				{
-				setState(140);
-				switch (_input.LA(1)) {
-				case T__10:
-					{
-					setState(136);
-					match(T__10);
-					setState(137);
-					atomExp();
-					}
-					break;
-				case T__11:
-					{
-					setState(138);
-					match(T__11);
-					setState(139);
-					atomExp();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				}
-				setState(144);
-				_errHandler.sync(this);
-				_la = _input.LA(1);
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class AtomExpContext extends ParserRuleContext {
-		public FunccallContext funccall() {
-			return getRuleContext(FunccallContext.class,0);
-		}
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public TerminalNode NUMBVALUE() { return getToken(DAYParser.NUMBVALUE, 0); }
-		public AdditionExpContext additionExp() {
-			return getRuleContext(AdditionExpContext.class,0);
-		}
-		public AtomExpContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_atomExp; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitAtomExp(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final AtomExpContext atomExp() throws RecognitionException {
-		AtomExpContext _localctx = new AtomExpContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_atomExp);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(152);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,17,_ctx) ) {
-			case 1:
-				{
-				setState(145);
-				funccall();
-				}
-				break;
-			case 2:
-				{
-				setState(146);
-				match(IDENTIFIER);
-				}
-				break;
-			case 3:
-				{
-				setState(147);
-				match(NUMBVALUE);
-				}
-				break;
-			case 4:
-				{
-				setState(148);
-				match(T__12);
-				setState(149);
-				additionExp();
-				setState(150);
-				match(T__13);
-				}
-				break;
-			}
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class FunccallContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public ParameterContext parameter() {
-			return getRuleContext(ParameterContext.class,0);
-		}
-		public FunccallContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_funccall; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitFunccall(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final FunccallContext funccall() throws RecognitionException {
-		FunccallContext _localctx = new FunccallContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_funccall);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(154);
-			match(IDENTIFIER);
-			setState(155);
-			match(T__12);
-			setState(156);
-			parameter();
-			setState(157);
-			match(T__13);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class FuncdeclarationContext extends ParserRuleContext {
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public ArgumentContext argument() {
-			return getRuleContext(ArgumentContext.class,0);
-		}
-		public BlockContext block() {
-			return getRuleContext(BlockContext.class,0);
-		}
-		public TypeContext type() {
-			return getRuleContext(TypeContext.class,0);
-		}
-		public FuncdeclarationContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_funcdeclaration; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitFuncdeclaration(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final FuncdeclarationContext funcdeclaration() throws RecognitionException {
-		FuncdeclarationContext _localctx = new FuncdeclarationContext(_ctx, getState());
-		enterRule(_localctx, 28, RULE_funcdeclaration);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(159);
-			match(T__14);
-			setState(160);
-			match(IDENTIFIER);
-			setState(161);
-			match(T__12);
-			setState(162);
-			argument();
-			setState(163);
-			match(T__13);
-			setState(164);
-			match(T__15);
-			setState(167);
-			switch (_input.LA(1)) {
-			case T__2:
-			case T__5:
-			case T__6:
-				{
-				setState(165);
-				type();
-				}
-				break;
-			case T__16:
-				{
-				setState(166);
-				match(T__16);
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-			setState(169);
-			block();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class ArgumentContext extends ParserRuleContext {
-		public TypeContext type() {
-			return getRuleContext(TypeContext.class,0);
-		}
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public List<ArgumentContext> argument() {
-			return getRuleContexts(ArgumentContext.class);
-		}
-		public ArgumentContext argument(int i) {
-			return getRuleContext(ArgumentContext.class,i);
-		}
-		public ArgumentContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_argument; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitArgument(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final ArgumentContext argument() throws RecognitionException {
-		ArgumentContext _localctx = new ArgumentContext(_ctx, getState());
-		enterRule(_localctx, 30, RULE_argument);
-		try {
-			int _alt;
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(171);
-			type();
-			setState(172);
-			match(IDENTIFIER);
-			setState(177);
-			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					{
-					{
-					setState(173);
-					match(T__17);
-					setState(174);
-					argument();
-					}
-					} 
-				}
-				setState(179);
-				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,19,_ctx);
-			}
+			setState(53);
+			((SelectionContext)_localctx).onFalse = block();
 			}
 		}
 		catch (RecognitionException re) {
@@ -1177,8 +317,11 @@ public class DAYParser extends Parser {
 	}
 
 	public static class BlockContext extends ParserRuleContext {
-		public StatementContext statement() {
-			return getRuleContext(StatementContext.class,0);
+		public List<StatementContext> statement() {
+			return getRuleContexts(StatementContext.class);
+		}
+		public StatementContext statement(int i) {
+			return getRuleContext(StatementContext.class,i);
 		}
 		public BlockContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -1193,305 +336,29 @@ public class DAYParser extends Parser {
 
 	public final BlockContext block() throws RecognitionException {
 		BlockContext _localctx = new BlockContext(_ctx, getState());
-		enterRule(_localctx, 32, RULE_block);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(180);
-			match(T__18);
-			setState(181);
-			statement();
-			setState(182);
-			match(T__19);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class RetContext extends ParserRuleContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode NUMBVALUE() { return getToken(DAYParser.NUMBVALUE, 0); }
-		public FunccallContext funccall() {
-			return getRuleContext(FunccallContext.class,0);
-		}
-		public RetContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_ret; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitRet(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final RetContext ret() throws RecognitionException {
-		RetContext _localctx = new RetContext(_ctx, getState());
-		enterRule(_localctx, 34, RULE_ret);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(184);
-			match(T__20);
-			setState(188);
-			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,20,_ctx) ) {
-			case 1:
-				{
-				setState(185);
-				expr();
-				}
-				break;
-			case 2:
-				{
-				setState(186);
-				match(NUMBVALUE);
-				}
-				break;
-			case 3:
-				{
-				setState(187);
-				funccall();
-				}
-				break;
-			}
-			setState(190);
-			match(T__4);
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class LoopContext extends ParserRuleContext {
-		public CondnContext condn() {
-			return getRuleContext(CondnContext.class,0);
-		}
-		public BlockContext block() {
-			return getRuleContext(BlockContext.class,0);
-		}
-		public LoopContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_loop; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitLoop(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final LoopContext loop() throws RecognitionException {
-		LoopContext _localctx = new LoopContext(_ctx, getState());
-		enterRule(_localctx, 36, RULE_loop);
-		try {
-			enterOuterAlt(_localctx, 1);
-			{
-			setState(192);
-			match(T__21);
-			setState(193);
-			condn();
-			setState(194);
-			match(T__13);
-			setState(195);
-			block();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class CondnstatementContext extends ParserRuleContext {
-		public List<BlockContext> block() {
-			return getRuleContexts(BlockContext.class);
-		}
-		public BlockContext block(int i) {
-			return getRuleContext(BlockContext.class,i);
-		}
-		public List<CondnstatementContext> condnstatement() {
-			return getRuleContexts(CondnstatementContext.class);
-		}
-		public CondnstatementContext condnstatement(int i) {
-			return getRuleContext(CondnstatementContext.class,i);
-		}
-		public CondnContext condn() {
-			return getRuleContext(CondnContext.class,0);
-		}
-		public CondnstatementContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_condnstatement; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitCondnstatement(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final CondnstatementContext condnstatement() throws RecognitionException {
-		CondnstatementContext _localctx = new CondnstatementContext(_ctx, getState());
-		enterRule(_localctx, 38, RULE_condnstatement);
+		enterRule(_localctx, 6, RULE_block);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(197);
-			match(T__22);
-			setState(200);
-			switch (_input.LA(1)) {
-			case T__22:
-				{
-				setState(198);
-				condnstatement();
-				}
-				break;
-			case T__8:
-			case T__12:
-			case IDENTIFIER:
-			case NUMBVALUE:
-				{
-				setState(199);
-				condn();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
-			}
-			setState(202);
-			match(T__13);
-			setState(203);
-			block();
-			setState(209);
-			_la = _input.LA(1);
-			if (_la==T__23) {
-				{
-				setState(204);
-				match(T__23);
-				setState(207);
-				switch (_input.LA(1)) {
-				case T__22:
-					{
-					setState(205);
-					condnstatement();
-					}
-					break;
-				case T__18:
-					{
-					setState(206);
-					block();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
-				}
-				}
-			}
-
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	public static class CondnContext extends ParserRuleContext {
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public TerminalNode NUMBVALUE() { return getToken(DAYParser.NUMBVALUE, 0); }
-		public TerminalNode STRINGVALUE() { return getToken(DAYParser.STRINGVALUE, 0); }
-		public BoolvalueContext boolvalue() {
-			return getRuleContext(BoolvalueContext.class,0);
-		}
-		public CondnContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_condn; }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitCondn(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final CondnContext condn() throws RecognitionException {
-		CondnContext _localctx = new CondnContext(_ctx, getState());
-		enterRule(_localctx, 40, RULE_condn);
-		try {
-			setState(219);
+			setState(55);
+			match(T__5);
+			setState(59);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,25,_ctx) ) {
-			case 1:
-				enterOuterAlt(_localctx, 1);
+			_la = _input.LA(1);
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__17) | (1L << T__23) | (1L << IDENTIFIER))) != 0)) {
 				{
-				setState(211);
-				expr();
-				}
-				break;
-			case 2:
-				enterOuterAlt(_localctx, 2);
 				{
-				setState(212);
-				match(IDENTIFIER);
-				setState(213);
-				match(T__24);
-				setState(217);
-				switch (_input.LA(1)) {
-				case NUMBVALUE:
-					{
-					setState(214);
-					match(NUMBVALUE);
-					}
-					break;
-				case STRINGVALUE:
-					{
-					setState(215);
-					match(STRINGVALUE);
-					}
-					break;
-				case T__25:
-				case T__26:
-					{
-					setState(216);
-					boolvalue();
-					}
-					break;
-				default:
-					throw new NoViableAltException(this);
+				setState(56);
+				statement();
 				}
 				}
-				break;
+				setState(61);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			setState(62);
+			match(T__6);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1505,91 +372,404 @@ public class DAYParser extends Parser {
 		return _localctx;
 	}
 
-	public static class ParameterContext extends ParserRuleContext {
-		public TerminalNode NUMBVALUE() { return getToken(DAYParser.NUMBVALUE, 0); }
-		public TerminalNode STRINGVALUE() { return getToken(DAYParser.STRINGVALUE, 0); }
-		public BoolvalueContext boolvalue() {
-			return getRuleContext(BoolvalueContext.class,0);
-		}
-		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
-		public ExprContext expr() {
-			return getRuleContext(ExprContext.class,0);
-		}
-		public List<ParameterContext> parameter() {
-			return getRuleContexts(ParameterContext.class);
-		}
-		public ParameterContext parameter(int i) {
-			return getRuleContext(ParameterContext.class,i);
-		}
-		public ParameterContext(ParserRuleContext parent, int invokingState) {
+	public static class ExpressionContext extends ParserRuleContext {
+		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_parameter; }
+		@Override public int getRuleIndex() { return RULE_expression; }
+	 
+		public ExpressionContext() { }
+		public void copyFrom(ExpressionContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class MulContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public MulContext(ExpressionContext ctx) { copyFrom(ctx); }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitParameter(this);
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitMul(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GThanEContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public GThanEContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitGThanE(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LessThanEContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public LessThanEContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitLessThanE(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class EQContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public EQContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitEQ(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class NumbContext extends ExpressionContext {
+		public Token number;
+		public TerminalNode NUMBER() { return getToken(DAYParser.NUMBER, 0); }
+		public NumbContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitNumb(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class DivContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public DivContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitDiv(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class LessThanContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public LessThanContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitLessThan(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class GthanContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public GthanContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitGthan(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class VariableContext extends ExpressionContext {
+		public Token var;
+		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
+		public VariableContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitVariable(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class NEQContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public NEQContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitNEQ(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class Func_call_exprContext extends ExpressionContext {
+		public FunccallContext funccall() {
+			return getRuleContext(FunccallContext.class,0);
+		}
+		public Func_call_exprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitFunc_call_expr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class PlusContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public PlusContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitPlus(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class MinusContext extends ExpressionContext {
+		public ExpressionContext left;
+		public ExpressionContext right;
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public MinusContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitMinus(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final ParameterContext parameter() throws RecognitionException {
-		ParameterContext _localctx = new ParameterContext(_ctx, getState());
-		enterRule(_localctx, 42, RULE_parameter);
+	public final ExpressionContext expression() throws RecognitionException {
+		return expression(0);
+	}
+
+	private ExpressionContext expression(int _p) throws RecognitionException {
+		ParserRuleContext _parentctx = _ctx;
+		int _parentState = getState();
+		ExpressionContext _localctx = new ExpressionContext(_ctx, _parentState);
+		ExpressionContext _prevctx = _localctx;
+		int _startState = 8;
+		enterRecursionRule(_localctx, 8, RULE_expression, _p);
 		try {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(226);
+			setState(68);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,26,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,4,_ctx) ) {
 			case 1:
 				{
-				setState(221);
-				match(NUMBVALUE);
+				_localctx = new NumbContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+
+				setState(65);
+				((NumbContext)_localctx).number = match(NUMBER);
 				}
 				break;
 			case 2:
 				{
-				setState(222);
-				match(STRINGVALUE);
+				_localctx = new VariableContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(66);
+				((VariableContext)_localctx).var = match(IDENTIFIER);
 				}
 				break;
 			case 3:
 				{
-				setState(223);
-				boolvalue();
-				}
-				break;
-			case 4:
-				{
-				setState(224);
-				match(IDENTIFIER);
-				}
-				break;
-			case 5:
-				{
-				setState(225);
-				expr();
+				_localctx = new Func_call_exprContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(67);
+				funccall();
 				}
 				break;
 			}
-			setState(232);
+			_ctx.stop = _input.LT(-1);
+			setState(102);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,27,_ctx);
+			_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
 				if ( _alt==1 ) {
+					if ( _parseListeners!=null ) triggerExitRuleEvent();
+					_prevctx = _localctx;
 					{
-					{
-					setState(228);
-					match(T__17);
-					setState(229);
-					parameter();
+					setState(100);
+					_errHandler.sync(this);
+					switch ( getInterpreter().adaptivePredict(_input,5,_ctx) ) {
+					case 1:
+						{
+						_localctx = new DivContext(new ExpressionContext(_parentctx, _parentState));
+						((DivContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(70);
+						if (!(precpred(_ctx, 13))) throw new FailedPredicateException(this, "precpred(_ctx, 13)");
+						setState(71);
+						match(T__7);
+						setState(72);
+						((DivContext)_localctx).right = expression(14);
+						}
+						break;
+					case 2:
+						{
+						_localctx = new MulContext(new ExpressionContext(_parentctx, _parentState));
+						((MulContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(73);
+						if (!(precpred(_ctx, 12))) throw new FailedPredicateException(this, "precpred(_ctx, 12)");
+						setState(74);
+						match(T__8);
+						setState(75);
+						((MulContext)_localctx).right = expression(13);
+						}
+						break;
+					case 3:
+						{
+						_localctx = new PlusContext(new ExpressionContext(_parentctx, _parentState));
+						((PlusContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(76);
+						if (!(precpred(_ctx, 11))) throw new FailedPredicateException(this, "precpred(_ctx, 11)");
+						setState(77);
+						match(T__9);
+						setState(78);
+						((PlusContext)_localctx).right = expression(12);
+						}
+						break;
+					case 4:
+						{
+						_localctx = new MinusContext(new ExpressionContext(_parentctx, _parentState));
+						((MinusContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(79);
+						if (!(precpred(_ctx, 10))) throw new FailedPredicateException(this, "precpred(_ctx, 10)");
+						setState(80);
+						match(T__10);
+						setState(81);
+						((MinusContext)_localctx).right = expression(11);
+						}
+						break;
+					case 5:
+						{
+						_localctx = new LessThanContext(new ExpressionContext(_parentctx, _parentState));
+						((LessThanContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(82);
+						if (!(precpred(_ctx, 9))) throw new FailedPredicateException(this, "precpred(_ctx, 9)");
+						setState(83);
+						match(T__11);
+						setState(84);
+						((LessThanContext)_localctx).right = expression(10);
+						}
+						break;
+					case 6:
+						{
+						_localctx = new LessThanEContext(new ExpressionContext(_parentctx, _parentState));
+						((LessThanEContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(85);
+						if (!(precpred(_ctx, 8))) throw new FailedPredicateException(this, "precpred(_ctx, 8)");
+						setState(86);
+						match(T__12);
+						setState(87);
+						((LessThanEContext)_localctx).right = expression(9);
+						}
+						break;
+					case 7:
+						{
+						_localctx = new GthanContext(new ExpressionContext(_parentctx, _parentState));
+						((GthanContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(88);
+						if (!(precpred(_ctx, 7))) throw new FailedPredicateException(this, "precpred(_ctx, 7)");
+						setState(89);
+						match(T__13);
+						setState(90);
+						((GthanContext)_localctx).right = expression(8);
+						}
+						break;
+					case 8:
+						{
+						_localctx = new GThanEContext(new ExpressionContext(_parentctx, _parentState));
+						((GThanEContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(91);
+						if (!(precpred(_ctx, 6))) throw new FailedPredicateException(this, "precpred(_ctx, 6)");
+						setState(92);
+						match(T__14);
+						setState(93);
+						((GThanEContext)_localctx).right = expression(7);
+						}
+						break;
+					case 9:
+						{
+						_localctx = new EQContext(new ExpressionContext(_parentctx, _parentState));
+						((EQContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(94);
+						if (!(precpred(_ctx, 5))) throw new FailedPredicateException(this, "precpred(_ctx, 5)");
+						setState(95);
+						match(T__15);
+						setState(96);
+						((EQContext)_localctx).right = expression(6);
+						}
+						break;
+					case 10:
+						{
+						_localctx = new NEQContext(new ExpressionContext(_parentctx, _parentState));
+						((NEQContext)_localctx).left = _prevctx;
+						pushNewRecursionContext(_localctx, _startState, RULE_expression);
+						setState(97);
+						if (!(precpred(_ctx, 4))) throw new FailedPredicateException(this, "precpred(_ctx, 4)");
+						setState(98);
+						match(T__16);
+						setState(99);
+						((NEQContext)_localctx).right = expression(5);
+						}
+						break;
 					}
 					} 
 				}
-				setState(234);
+				setState(104);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,27,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,6,_ctx);
 			}
 			}
 		}
@@ -1599,37 +779,35 @@ public class DAYParser extends Parser {
 			_errHandler.recover(this, re);
 		}
 		finally {
-			exitRule();
+			unrollRecursionContexts(_parentctx);
 		}
 		return _localctx;
 	}
 
-	public static class TypeContext extends ParserRuleContext {
-		public TypeContext(ParserRuleContext parent, int invokingState) {
+	public static class VardeclarationContext extends ParserRuleContext {
+		public Token var2;
+		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
+		public VardeclarationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_type; }
+		@Override public int getRuleIndex() { return RULE_vardeclaration; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitType(this);
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitVardeclaration(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final TypeContext type() throws RecognitionException {
-		TypeContext _localctx = new TypeContext(_ctx, getState());
-		enterRule(_localctx, 44, RULE_type);
-		int _la;
+	public final VardeclarationContext vardeclaration() throws RecognitionException {
+		VardeclarationContext _localctx = new VardeclarationContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_vardeclaration);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(235);
-			_la = _input.LA(1);
-			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__2) | (1L << T__5) | (1L << T__6))) != 0)) ) {
-			_errHandler.recoverInline(this);
-			} else {
-				consume();
-			}
+			setState(105);
+			match(T__17);
+			setState(106);
+			((VardeclarationContext)_localctx).var2 = match(IDENTIFIER);
 			}
 		}
 		catch (RecognitionException re) {
@@ -1643,31 +821,162 @@ public class DAYParser extends Parser {
 		return _localctx;
 	}
 
-	public static class BoolvalueContext extends ParserRuleContext {
-		public BoolvalueContext(ParserRuleContext parent, int invokingState) {
+	public static class AssignmentContext extends ParserRuleContext {
+		public Token var1;
+		public ExpressionContext expr;
+		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public AssignmentContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_boolvalue; }
+		@Override public int getRuleIndex() { return RULE_assignment; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitBoolvalue(this);
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitAssignment(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final BoolvalueContext boolvalue() throws RecognitionException {
-		BoolvalueContext _localctx = new BoolvalueContext(_ctx, getState());
-		enterRule(_localctx, 46, RULE_boolvalue);
+	public final AssignmentContext assignment() throws RecognitionException {
+		AssignmentContext _localctx = new AssignmentContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_assignment);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(108);
+			((AssignmentContext)_localctx).var1 = match(IDENTIFIER);
+			setState(109);
+			match(T__18);
+			setState(110);
+			((AssignmentContext)_localctx).expr = expression(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class FuncdeclarationContext extends ParserRuleContext {
+		public Token func;
+		public ParamdecContext params;
+		public StatementlistContext stat;
+		public ExpressionContext ret;
+		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
+		public ParamdecContext paramdec() {
+			return getRuleContext(ParamdecContext.class,0);
+		}
+		public StatementlistContext statementlist() {
+			return getRuleContext(StatementlistContext.class,0);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public FuncdeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_funcdeclaration; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitFuncdeclaration(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FuncdeclarationContext funcdeclaration() throws RecognitionException {
+		FuncdeclarationContext _localctx = new FuncdeclarationContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_funcdeclaration);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(112);
+			match(T__19);
+			setState(113);
+			((FuncdeclarationContext)_localctx).func = match(IDENTIFIER);
+			setState(114);
+			match(T__2);
+			setState(115);
+			((FuncdeclarationContext)_localctx).params = paramdec();
+			setState(116);
+			match(T__3);
+			setState(117);
+			match(T__20);
+			setState(118);
+			match(T__17);
+			setState(119);
+			match(T__5);
+			setState(120);
+			((FuncdeclarationContext)_localctx).stat = statementlist();
+			setState(121);
+			match(T__21);
+			setState(122);
+			((FuncdeclarationContext)_localctx).ret = expression(0);
+			setState(123);
+			match(T__0);
+			setState(124);
+			match(T__6);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ParamdecContext extends ParserRuleContext {
+		public List<VardeclarationContext> vardeclaration() {
+			return getRuleContexts(VardeclarationContext.class);
+		}
+		public VardeclarationContext vardeclaration(int i) {
+			return getRuleContext(VardeclarationContext.class,i);
+		}
+		public ParamdecContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_paramdec; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitParamdec(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ParamdecContext paramdec() throws RecognitionException {
+		ParamdecContext _localctx = new ParamdecContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_paramdec);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(237);
+			setState(126);
+			vardeclaration();
+			setState(131);
+			_errHandler.sync(this);
 			_la = _input.LA(1);
-			if ( !(_la==T__25 || _la==T__26) ) {
-			_errHandler.recoverInline(this);
-			} else {
-				consume();
+			while (_la==T__22) {
+				{
+				{
+				setState(127);
+				match(T__22);
+				setState(128);
+				vardeclaration();
+				}
+				}
+				setState(133);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
 			}
 			}
 		}
@@ -1680,89 +989,277 @@ public class DAYParser extends Parser {
 			exitRule();
 		}
 		return _localctx;
+	}
+
+	public static class StatementlistContext extends ParserRuleContext {
+		public List<StatementContext> statement() {
+			return getRuleContexts(StatementContext.class);
+		}
+		public StatementContext statement(int i) {
+			return getRuleContext(StatementContext.class,i);
+		}
+		public StatementlistContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_statementlist; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitStatementlist(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final StatementlistContext statementlist() throws RecognitionException {
+		StatementlistContext _localctx = new StatementlistContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_statementlist);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(135); 
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			do {
+				{
+				{
+				setState(134);
+				statement();
+				}
+				}
+				setState(137); 
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__1) | (1L << T__17) | (1L << T__23) | (1L << IDENTIFIER))) != 0) );
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class FunccallContext extends ParserRuleContext {
+		public Token func;
+		public ExpressionlistContext args;
+		public TerminalNode IDENTIFIER() { return getToken(DAYParser.IDENTIFIER, 0); }
+		public ExpressionlistContext expressionlist() {
+			return getRuleContext(ExpressionlistContext.class,0);
+		}
+		public FunccallContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_funccall; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitFunccall(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final FunccallContext funccall() throws RecognitionException {
+		FunccallContext _localctx = new FunccallContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_funccall);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(139);
+			((FunccallContext)_localctx).func = match(IDENTIFIER);
+			setState(140);
+			match(T__2);
+			setState(141);
+			((FunccallContext)_localctx).args = expressionlist();
+			setState(142);
+			match(T__3);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class ExpressionlistContext extends ParserRuleContext {
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public ExpressionlistContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_expressionlist; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitExpressionlist(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final ExpressionlistContext expressionlist() throws RecognitionException {
+		ExpressionlistContext _localctx = new ExpressionlistContext(_ctx, getState());
+		enterRule(_localctx, 22, RULE_expressionlist);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(144);
+			expression(0);
+			setState(149);
+			_errHandler.sync(this);
+			_la = _input.LA(1);
+			while (_la==T__22) {
+				{
+				{
+				setState(145);
+				match(T__22);
+				setState(146);
+				expression(0);
+				}
+				}
+				setState(151);
+				_errHandler.sync(this);
+				_la = _input.LA(1);
+			}
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public static class PrintContext extends ParserRuleContext {
+		public ExpressionContext argument;
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public PrintContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_print; }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof DAYVisitor ) return ((DAYVisitor<? extends T>)visitor).visitPrint(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final PrintContext print() throws RecognitionException {
+		PrintContext _localctx = new PrintContext(_ctx, getState());
+		enterRule(_localctx, 24, RULE_print);
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(152);
+			match(T__23);
+			setState(153);
+			((PrintContext)_localctx).argument = expression(0);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
+		switch (ruleIndex) {
+		case 4:
+			return expression_sempred((ExpressionContext)_localctx, predIndex);
+		}
+		return true;
+	}
+	private boolean expression_sempred(ExpressionContext _localctx, int predIndex) {
+		switch (predIndex) {
+		case 0:
+			return precpred(_ctx, 13);
+		case 1:
+			return precpred(_ctx, 12);
+		case 2:
+			return precpred(_ctx, 11);
+		case 3:
+			return precpred(_ctx, 10);
+		case 4:
+			return precpred(_ctx, 9);
+		case 5:
+			return precpred(_ctx, 8);
+		case 6:
+			return precpred(_ctx, 7);
+		case 7:
+			return precpred(_ctx, 6);
+		case 8:
+			return precpred(_ctx, 5);
+		case 9:
+			return precpred(_ctx, 4);
+		}
+		return true;
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3!\u00f2\4\2\t\2\4"+
-		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
-		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
-		"\4\23\t\23\4\24\t\24\4\25\t\25\4\26\t\26\4\27\t\27\4\30\t\30\4\31\t\31"+
-		"\3\2\7\2\64\n\2\f\2\16\2\67\13\2\3\2\3\2\3\3\3\3\5\3=\n\3\3\4\3\4\3\4"+
-		"\5\4B\n\4\3\5\3\5\3\5\3\5\3\6\3\6\3\6\3\6\3\6\3\6\5\6N\n\6\3\7\5\7Q\n"+
-		"\7\3\7\3\7\3\7\5\7V\n\7\3\7\3\7\3\b\5\b[\n\b\3\b\3\b\3\b\3\b\3\b\5\bb"+
-		"\n\b\5\bd\n\b\3\b\3\b\3\t\5\ti\n\t\3\t\3\t\3\t\5\tn\n\t\3\t\3\t\3\n\3"+
-		"\n\3\n\3\n\3\n\5\nw\n\n\3\n\3\n\3\13\5\13|\n\13\3\13\3\13\3\f\3\f\3\f"+
-		"\3\f\3\f\7\f\u0085\n\f\f\f\16\f\u0088\13\f\3\r\3\r\3\r\3\r\3\r\7\r\u008f"+
-		"\n\r\f\r\16\r\u0092\13\r\3\16\3\16\3\16\3\16\3\16\3\16\3\16\5\16\u009b"+
-		"\n\16\3\17\3\17\3\17\3\17\3\17\3\20\3\20\3\20\3\20\3\20\3\20\3\20\3\20"+
-		"\5\20\u00aa\n\20\3\20\3\20\3\21\3\21\3\21\3\21\7\21\u00b2\n\21\f\21\16"+
-		"\21\u00b5\13\21\3\22\3\22\3\22\3\22\3\23\3\23\3\23\3\23\5\23\u00bf\n\23"+
-		"\3\23\3\23\3\24\3\24\3\24\3\24\3\24\3\25\3\25\3\25\5\25\u00cb\n\25\3\25"+
-		"\3\25\3\25\3\25\3\25\5\25\u00d2\n\25\5\25\u00d4\n\25\3\26\3\26\3\26\3"+
-		"\26\3\26\3\26\5\26\u00dc\n\26\5\26\u00de\n\26\3\27\3\27\3\27\3\27\3\27"+
-		"\5\27\u00e5\n\27\3\27\3\27\7\27\u00e9\n\27\f\27\16\27\u00ec\13\27\3\30"+
-		"\3\30\3\31\3\31\3\31\2\2\32\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \""+
-		"$&(*,.\60\2\4\4\2\5\5\b\t\3\2\34\35\u0104\2\65\3\2\2\2\4<\3\2\2\2\6A\3"+
-		"\2\2\2\bC\3\2\2\2\nM\3\2\2\2\fP\3\2\2\2\16Z\3\2\2\2\20h\3\2\2\2\22q\3"+
-		"\2\2\2\24{\3\2\2\2\26\177\3\2\2\2\30\u0089\3\2\2\2\32\u009a\3\2\2\2\34"+
-		"\u009c\3\2\2\2\36\u00a1\3\2\2\2 \u00ad\3\2\2\2\"\u00b6\3\2\2\2$\u00ba"+
-		"\3\2\2\2&\u00c2\3\2\2\2(\u00c7\3\2\2\2*\u00dd\3\2\2\2,\u00e4\3\2\2\2."+
-		"\u00ed\3\2\2\2\60\u00ef\3\2\2\2\62\64\5\4\3\2\63\62\3\2\2\2\64\67\3\2"+
-		"\2\2\65\63\3\2\2\2\65\66\3\2\2\2\668\3\2\2\2\67\65\3\2\2\289\5\b\5\29"+
-		"\3\3\2\2\2:=\5\6\4\2;=\5\36\20\2<:\3\2\2\2<;\3\2\2\2=\5\3\2\2\2>B\5\16"+
-		"\b\2?B\5\20\t\2@B\5\f\7\2A>\3\2\2\2A?\3\2\2\2A@\3\2\2\2B\7\3\2\2\2CD\7"+
-		"\3\2\2DE\5\n\6\2EF\7\4\2\2F\t\3\2\2\2GN\5\6\4\2HN\5\22\n\2IN\5\34\17\2"+
-		"JN\5(\25\2KN\5&\24\2LN\5$\23\2MG\3\2\2\2MH\3\2\2\2MI\3\2\2\2MJ\3\2\2\2"+
-		"MK\3\2\2\2ML\3\2\2\2N\13\3\2\2\2OQ\7\5\2\2PO\3\2\2\2PQ\3\2\2\2QR\3\2\2"+
-		"\2RU\7\36\2\2ST\7\6\2\2TV\7 \2\2US\3\2\2\2UV\3\2\2\2VW\3\2\2\2WX\7\7\2"+
-		"\2X\r\3\2\2\2Y[\7\b\2\2ZY\3\2\2\2Z[\3\2\2\2[\\\3\2\2\2\\c\7\36\2\2]a\7"+
-		"\6\2\2^b\7\37\2\2_b\5\24\13\2`b\5\34\17\2a^\3\2\2\2a_\3\2\2\2a`\3\2\2"+
-		"\2bd\3\2\2\2c]\3\2\2\2cd\3\2\2\2de\3\2\2\2ef\7\7\2\2f\17\3\2\2\2gi\7\t"+
-		"\2\2hg\3\2\2\2hi\3\2\2\2ij\3\2\2\2jm\7\36\2\2kl\7\6\2\2ln\5\60\31\2mk"+
-		"\3\2\2\2mn\3\2\2\2no\3\2\2\2op\7\7\2\2p\21\3\2\2\2qv\7\n\2\2rw\5\24\13"+
-		"\2sw\7\37\2\2tw\7 \2\2uw\5\60\31\2vr\3\2\2\2vs\3\2\2\2vt\3\2\2\2vu\3\2"+
-		"\2\2wx\3\2\2\2xy\7\7\2\2y\23\3\2\2\2z|\7\13\2\2{z\3\2\2\2{|\3\2\2\2|}"+
-		"\3\2\2\2}~\5\26\f\2~\25\3\2\2\2\177\u0086\5\30\r\2\u0080\u0081\7\f\2\2"+
-		"\u0081\u0085\5\30\r\2\u0082\u0083\7\13\2\2\u0083\u0085\5\30\r\2\u0084"+
-		"\u0080\3\2\2\2\u0084\u0082\3\2\2\2\u0085\u0088\3\2\2\2\u0086\u0084\3\2"+
-		"\2\2\u0086\u0087\3\2\2\2\u0087\27\3\2\2\2\u0088\u0086\3\2\2\2\u0089\u0090"+
-		"\5\32\16\2\u008a\u008b\7\r\2\2\u008b\u008f\5\32\16\2\u008c\u008d\7\16"+
-		"\2\2\u008d\u008f\5\32\16\2\u008e\u008a\3\2\2\2\u008e\u008c\3\2\2\2\u008f"+
-		"\u0092\3\2\2\2\u0090\u008e\3\2\2\2\u0090\u0091\3\2\2\2\u0091\31\3\2\2"+
-		"\2\u0092\u0090\3\2\2\2\u0093\u009b\5\34\17\2\u0094\u009b\7\36\2\2\u0095"+
-		"\u009b\7\37\2\2\u0096\u0097\7\17\2\2\u0097\u0098\5\26\f\2\u0098\u0099"+
-		"\7\20\2\2\u0099\u009b\3\2\2\2\u009a\u0093\3\2\2\2\u009a\u0094\3\2\2\2"+
-		"\u009a\u0095\3\2\2\2\u009a\u0096\3\2\2\2\u009b\33\3\2\2\2\u009c\u009d"+
-		"\7\36\2\2\u009d\u009e\7\17\2\2\u009e\u009f\5,\27\2\u009f\u00a0\7\20\2"+
-		"\2\u00a0\35\3\2\2\2\u00a1\u00a2\7\21\2\2\u00a2\u00a3\7\36\2\2\u00a3\u00a4"+
-		"\7\17\2\2\u00a4\u00a5\5 \21\2\u00a5\u00a6\7\20\2\2\u00a6\u00a9\7\22\2"+
-		"\2\u00a7\u00aa\5.\30\2\u00a8\u00aa\7\23\2\2\u00a9\u00a7\3\2\2\2\u00a9"+
-		"\u00a8\3\2\2\2\u00aa\u00ab\3\2\2\2\u00ab\u00ac\5\"\22\2\u00ac\37\3\2\2"+
-		"\2\u00ad\u00ae\5.\30\2\u00ae\u00b3\7\36\2\2\u00af\u00b0\7\24\2\2\u00b0"+
-		"\u00b2\5 \21\2\u00b1\u00af\3\2\2\2\u00b2\u00b5\3\2\2\2\u00b3\u00b1\3\2"+
-		"\2\2\u00b3\u00b4\3\2\2\2\u00b4!\3\2\2\2\u00b5\u00b3\3\2\2\2\u00b6\u00b7"+
-		"\7\25\2\2\u00b7\u00b8\5\n\6\2\u00b8\u00b9\7\26\2\2\u00b9#\3\2\2\2\u00ba"+
-		"\u00be\7\27\2\2\u00bb\u00bf\5\24\13\2\u00bc\u00bf\7\37\2\2\u00bd\u00bf"+
-		"\5\34\17\2\u00be\u00bb\3\2\2\2\u00be\u00bc\3\2\2\2\u00be\u00bd\3\2\2\2"+
-		"\u00bf\u00c0\3\2\2\2\u00c0\u00c1\7\7\2\2\u00c1%\3\2\2\2\u00c2\u00c3\7"+
-		"\30\2\2\u00c3\u00c4\5*\26\2\u00c4\u00c5\7\20\2\2\u00c5\u00c6\5\"\22\2"+
-		"\u00c6\'\3\2\2\2\u00c7\u00ca\7\31\2\2\u00c8\u00cb\5(\25\2\u00c9\u00cb"+
-		"\5*\26\2\u00ca\u00c8\3\2\2\2\u00ca\u00c9\3\2\2\2\u00cb\u00cc\3\2\2\2\u00cc"+
-		"\u00cd\7\20\2\2\u00cd\u00d3\5\"\22\2\u00ce\u00d1\7\32\2\2\u00cf\u00d2"+
-		"\5(\25\2\u00d0\u00d2\5\"\22\2\u00d1\u00cf\3\2\2\2\u00d1\u00d0\3\2\2\2"+
-		"\u00d2\u00d4\3\2\2\2\u00d3\u00ce\3\2\2\2\u00d3\u00d4\3\2\2\2\u00d4)\3"+
-		"\2\2\2\u00d5\u00de\5\24\13\2\u00d6\u00d7\7\36\2\2\u00d7\u00db\7\33\2\2"+
-		"\u00d8\u00dc\7\37\2\2\u00d9\u00dc\7 \2\2\u00da\u00dc\5\60\31\2\u00db\u00d8"+
-		"\3\2\2\2\u00db\u00d9\3\2\2\2\u00db\u00da\3\2\2\2\u00dc\u00de\3\2\2\2\u00dd"+
-		"\u00d5\3\2\2\2\u00dd\u00d6\3\2\2\2\u00de+\3\2\2\2\u00df\u00e5\7\37\2\2"+
-		"\u00e0\u00e5\7 \2\2\u00e1\u00e5\5\60\31\2\u00e2\u00e5\7\36\2\2\u00e3\u00e5"+
-		"\5\24\13\2\u00e4\u00df\3\2\2\2\u00e4\u00e0\3\2\2\2\u00e4\u00e1\3\2\2\2"+
-		"\u00e4\u00e2\3\2\2\2\u00e4\u00e3\3\2\2\2\u00e5\u00ea\3\2\2\2\u00e6\u00e7"+
-		"\7\24\2\2\u00e7\u00e9\5,\27\2\u00e8\u00e6\3\2\2\2\u00e9\u00ec\3\2\2\2"+
-		"\u00ea\u00e8\3\2\2\2\u00ea\u00eb\3\2\2\2\u00eb-\3\2\2\2\u00ec\u00ea\3"+
-		"\2\2\2\u00ed\u00ee\t\2\2\2\u00ee/\3\2\2\2\u00ef\u00f0\t\3\2\2\u00f0\61"+
-		"\3\2\2\2\36\65<AMPUZachmv{\u0084\u0086\u008e\u0090\u009a\u00a9\u00b3\u00be"+
-		"\u00ca\u00d1\u00d3\u00db\u00dd\u00e4\u00ea";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\36\u009e\4\2\t\2"+
+		"\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13"+
+		"\t\13\4\f\t\f\4\r\t\r\4\16\t\16\3\2\3\2\6\2\37\n\2\r\2\16\2 \3\3\3\3\3"+
+		"\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\3\5\3\60\n\3\3\4\3\4\3\4\3\4"+
+		"\3\4\3\4\3\4\3\4\3\5\3\5\7\5<\n\5\f\5\16\5?\13\5\3\5\3\5\3\6\3\6\3\6\3"+
+		"\6\5\6G\n\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3"+
+		"\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\3\6\7\6g\n"+
+		"\6\f\6\16\6j\13\6\3\7\3\7\3\7\3\b\3\b\3\b\3\b\3\t\3\t\3\t\3\t\3\t\3\t"+
+		"\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\t\3\n\3\n\3\n\7\n\u0084\n\n\f\n\16\n\u0087"+
+		"\13\n\3\13\6\13\u008a\n\13\r\13\16\13\u008b\3\f\3\f\3\f\3\f\3\f\3\r\3"+
+		"\r\3\r\7\r\u0096\n\r\f\r\16\r\u0099\13\r\3\16\3\16\3\16\3\16\2\3\n\17"+
+		"\2\4\6\b\n\f\16\20\22\24\26\30\32\2\2\u00a6\2\36\3\2\2\2\4/\3\2\2\2\6"+
+		"\61\3\2\2\2\b9\3\2\2\2\nF\3\2\2\2\fk\3\2\2\2\16n\3\2\2\2\20r\3\2\2\2\22"+
+		"\u0080\3\2\2\2\24\u0089\3\2\2\2\26\u008d\3\2\2\2\30\u0092\3\2\2\2\32\u009a"+
+		"\3\2\2\2\34\37\5\4\3\2\35\37\5\20\t\2\36\34\3\2\2\2\36\35\3\2\2\2\37 "+
+		"\3\2\2\2 \36\3\2\2\2 !\3\2\2\2!\3\3\2\2\2\"#\5\32\16\2#$\7\3\2\2$\60\3"+
+		"\2\2\2%&\5\f\7\2&\'\7\3\2\2\'\60\3\2\2\2()\5\16\b\2)*\7\3\2\2*\60\3\2"+
+		"\2\2+,\5\26\f\2,-\7\3\2\2-\60\3\2\2\2.\60\5\6\4\2/\"\3\2\2\2/%\3\2\2\2"+
+		"/(\3\2\2\2/+\3\2\2\2/.\3\2\2\2\60\5\3\2\2\2\61\62\7\4\2\2\62\63\7\5\2"+
+		"\2\63\64\5\n\6\2\64\65\7\6\2\2\65\66\5\b\5\2\66\67\7\7\2\2\678\5\b\5\2"+
+		"8\7\3\2\2\29=\7\b\2\2:<\5\4\3\2;:\3\2\2\2<?\3\2\2\2=;\3\2\2\2=>\3\2\2"+
+		"\2>@\3\2\2\2?=\3\2\2\2@A\7\t\2\2A\t\3\2\2\2BC\b\6\1\2CG\7\34\2\2DG\7\33"+
+		"\2\2EG\5\26\f\2FB\3\2\2\2FD\3\2\2\2FE\3\2\2\2Gh\3\2\2\2HI\f\17\2\2IJ\7"+
+		"\n\2\2Jg\5\n\6\20KL\f\16\2\2LM\7\13\2\2Mg\5\n\6\17NO\f\r\2\2OP\7\f\2\2"+
+		"Pg\5\n\6\16QR\f\f\2\2RS\7\r\2\2Sg\5\n\6\rTU\f\13\2\2UV\7\16\2\2Vg\5\n"+
+		"\6\fWX\f\n\2\2XY\7\17\2\2Yg\5\n\6\13Z[\f\t\2\2[\\\7\20\2\2\\g\5\n\6\n"+
+		"]^\f\b\2\2^_\7\21\2\2_g\5\n\6\t`a\f\7\2\2ab\7\22\2\2bg\5\n\6\bcd\f\6\2"+
+		"\2de\7\23\2\2eg\5\n\6\7fH\3\2\2\2fK\3\2\2\2fN\3\2\2\2fQ\3\2\2\2fT\3\2"+
+		"\2\2fW\3\2\2\2fZ\3\2\2\2f]\3\2\2\2f`\3\2\2\2fc\3\2\2\2gj\3\2\2\2hf\3\2"+
+		"\2\2hi\3\2\2\2i\13\3\2\2\2jh\3\2\2\2kl\7\24\2\2lm\7\33\2\2m\r\3\2\2\2"+
+		"no\7\33\2\2op\7\25\2\2pq\5\n\6\2q\17\3\2\2\2rs\7\26\2\2st\7\33\2\2tu\7"+
+		"\5\2\2uv\5\22\n\2vw\7\6\2\2wx\7\27\2\2xy\7\24\2\2yz\7\b\2\2z{\5\24\13"+
+		"\2{|\7\30\2\2|}\5\n\6\2}~\7\3\2\2~\177\7\t\2\2\177\21\3\2\2\2\u0080\u0085"+
+		"\5\f\7\2\u0081\u0082\7\31\2\2\u0082\u0084\5\f\7\2\u0083\u0081\3\2\2\2"+
+		"\u0084\u0087\3\2\2\2\u0085\u0083\3\2\2\2\u0085\u0086\3\2\2\2\u0086\23"+
+		"\3\2\2\2\u0087\u0085\3\2\2\2\u0088\u008a\5\4\3\2\u0089\u0088\3\2\2\2\u008a"+
+		"\u008b\3\2\2\2\u008b\u0089\3\2\2\2\u008b\u008c\3\2\2\2\u008c\25\3\2\2"+
+		"\2\u008d\u008e\7\33\2\2\u008e\u008f\7\5\2\2\u008f\u0090\5\30\r\2\u0090"+
+		"\u0091\7\6\2\2\u0091\27\3\2\2\2\u0092\u0097\5\n\6\2\u0093\u0094\7\31\2"+
+		"\2\u0094\u0096\5\n\6\2\u0095\u0093\3\2\2\2\u0096\u0099\3\2\2\2\u0097\u0095"+
+		"\3\2\2\2\u0097\u0098\3\2\2\2\u0098\31\3\2\2\2\u0099\u0097\3\2\2\2\u009a"+
+		"\u009b\7\32\2\2\u009b\u009c\5\n\6\2\u009c\33\3\2\2\2\f\36 /=Ffh\u0085"+
+		"\u008b\u0097";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

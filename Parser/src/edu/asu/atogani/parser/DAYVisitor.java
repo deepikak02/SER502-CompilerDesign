@@ -17,131 +17,17 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitProg(DAYParser.ProgContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#declaration}.
+	 * Visit a parse tree produced by {@link DAYParser#statement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaration(DAYParser.DeclarationContext ctx);
+	T visitStatement(DAYParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#vardeclaration}.
+	 * Visit a parse tree produced by {@link DAYParser#selection}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVardeclaration(DAYParser.VardeclarationContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#mainblock}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMainblock(DAYParser.MainblockContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code vdec_statement}
-	 * labeled alternative in {@link DAYParser#statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVdec_statement(DAYParser.Vdec_statementContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code label_print}
-	 * labeled alternative in {@link DAYParser#statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLabel_print(DAYParser.Label_printContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code fcall}
-	 * labeled alternative in {@link DAYParser#statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFcall(DAYParser.FcallContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code cstate}
-	 * labeled alternative in {@link DAYParser#statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitCstate(DAYParser.CstateContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code label_loop}
-	 * labeled alternative in {@link DAYParser#statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitLabel_loop(DAYParser.Label_loopContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code return}
-	 * labeled alternative in {@link DAYParser#statement}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitReturn(DAYParser.ReturnContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#stringdecl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitStringdecl(DAYParser.StringdeclContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#intdecl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitIntdecl(DAYParser.IntdeclContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#booldecl}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitBooldecl(DAYParser.BooldeclContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#print}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitPrint(DAYParser.PrintContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#expr}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitExpr(DAYParser.ExprContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#additionExp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAdditionExp(DAYParser.AdditionExpContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#multiplyExp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitMultiplyExp(DAYParser.MultiplyExpContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#atomExp}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitAtomExp(DAYParser.AtomExpContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#funccall}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFunccall(DAYParser.FunccallContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#funcdeclaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFuncdeclaration(DAYParser.FuncdeclarationContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link DAYParser#argument}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitArgument(DAYParser.ArgumentContext ctx);
+	T visitSelection(DAYParser.SelectionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DAYParser#block}.
 	 * @param ctx the parse tree
@@ -149,45 +35,142 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitBlock(DAYParser.BlockContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#ret}.
+	 * Visit a parse tree produced by the {@code Mul}
+	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRet(DAYParser.RetContext ctx);
+	T visitMul(DAYParser.MulContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#loop}.
+	 * Visit a parse tree produced by the {@code GThanE}
+	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLoop(DAYParser.LoopContext ctx);
+	T visitGThanE(DAYParser.GThanEContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#condnstatement}.
+	 * Visit a parse tree produced by the {@code LessThanE}
+	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCondnstatement(DAYParser.CondnstatementContext ctx);
+	T visitLessThanE(DAYParser.LessThanEContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#condn}.
+	 * Visit a parse tree produced by the {@code EQ}
+	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitCondn(DAYParser.CondnContext ctx);
+	T visitEQ(DAYParser.EQContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#parameter}.
+	 * Visit a parse tree produced by the {@code numb}
+	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitParameter(DAYParser.ParameterContext ctx);
+	T visitNumb(DAYParser.NumbContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#type}.
+	 * Visit a parse tree produced by the {@code Div}
+	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitType(DAYParser.TypeContext ctx);
+	T visitDiv(DAYParser.DivContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link DAYParser#boolvalue}.
+	 * Visit a parse tree produced by the {@code LessThan}
+	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBoolvalue(DAYParser.BoolvalueContext ctx);
+	T visitLessThan(DAYParser.LessThanContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Gthan}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGthan(DAYParser.GthanContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code variable}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariable(DAYParser.VariableContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code NEQ}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNEQ(DAYParser.NEQContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code func_call_expr}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunc_call_expr(DAYParser.Func_call_exprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Plus}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPlus(DAYParser.PlusContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Minus}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMinus(DAYParser.MinusContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#vardeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVardeclaration(DAYParser.VardeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#assignment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAssignment(DAYParser.AssignmentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#funcdeclaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncdeclaration(DAYParser.FuncdeclarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#paramdec}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParamdec(DAYParser.ParamdecContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#statementlist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStatementlist(DAYParser.StatementlistContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#funccall}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunccall(DAYParser.FunccallContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#expressionlist}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpressionlist(DAYParser.ExpressionlistContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#print}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrint(DAYParser.PrintContext ctx);
 }

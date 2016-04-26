@@ -1,70 +1,51 @@
 grammar DAY;
 
-prog : 	(declaration)* 
-		mainblock
-		;
-		
-declaration : vardeclaration 
-			| funcdeclaration 
-			;
-	 
-vardeclaration : intdecl
-			   | booldecl 
-			   | stringdecl 
-			   ;
-			   
-mainblock: 'START' statement 'END';
+prog : ((statement) | (funcdeclaration))+;
 
-statement : vardeclaration #vdec_statement
-		  | print #label_print
-		  | funccall #fcall
-		  | condnstatement #cstate
-		  | loop #label_loop
-		  | ret #return 
-		  ; 
+statement : print ';'
+		  | vardeclaration ';'
+		  | assignment ';'
+		  | funccall ';'
+		  | selection
+		  ;
 
-stringdecl : ('string')? var=IDENTIFIER ('=' val=STRINGVALUE )? ';';
+selection : 'if' '(' condition = expression ')' onTrue = block 'else' onFalse = block ;
 
-intdecl : ('numb')? var=IDENTIFIER ('=' (numb_val = NUMBVALUE|expr|funccall))? ';';
+block : '{' statement* '}';
 
-booldecl : ('boolean')? var=IDENTIFIER ('=' val=boolvalue)? ';';
+expression : left = expression '/' right = expression #Div
+    	   | left = expression '*' right = expression #Mul
+    	   | left = expression '+' right = expression #Plus
+    	   | left = expression '-' right = expression #Minus
+    	   | left = expression '<' right = expression #LessThan
+    	   | left = expression '<=' right = expression #LessThanE
+    	   | left = expression '>' right = expression #Gthan
+    	   | left = expression '>=' right = expression #GThanE
+    	   | left = expression '==' right = expression #EQ
+    	   | left = expression '!=' right = expression #NEQ
+    	   | number = NUMBER #numb
+    	   | var = IDENTIFIER #variable
+    	   | funccall #func_call_expr
+    	   ;
+    	   
+vardeclaration : 'numb' var2 = IDENTIFIER; 
 
-print: 'print' (expr|NUMBVALUE|STRINGVALUE|boolvalue) ';';
+assignment : var1 = IDENTIFIER '=' expr = expression;
 
-expr: ('-')?additionExp;
+funcdeclaration : 'method' func = IDENTIFIER '(' params = paramdec ')' '<-' 'numb' '{' stat = statementlist 'return' ret = expression';' '}';
 
-additionExp: multiplyExp( '+' multiplyExp | '-' multiplyExp)*;
+paramdec : vardeclaration (',' vardeclaration)*;
 
-multiplyExp: atomExp( '*' atomExp | '/' atomExp)*;
+statementlist : (statement )+;
 
-atomExp: (funccall|IDENTIFIER|NUMBVALUE|'(' additionExp ')');
+funccall : func = IDENTIFIER '(' args = expressionlist ')';
 
-funccall: IDENTIFIER'('parameter')';
+expressionlist : expression (','expression)*;
 
-funcdeclaration : 'method' IDENTIFIER '(' argument ')' '<-' (type | 'void') block;
+print : 'print' argument = expression ;
+    	 
+IDENTIFIER : [_a-zA-Z][a-zA-Z_0-9]* ; 	 
+NUMBER : [0-9]+;
+STRING : '"' .*? '"';
 
-argument : type IDENTIFIER (',' argument)*;
-
-block: '{' statement '}';
-
-ret: 'return' (expr|NUMBVALUE|funccall)';';
-
-
-
-loop: 'while('condn')'block;
-
-condnstatement: 'if(' (condnstatement|condn) ')'block ( 'else' (condnstatement|block) )?;
-
-condn: expr|IDENTIFIER '==' (NUMBVALUE|STRINGVALUE|boolvalue);
-
-parameter: (NUMBVALUE|STRINGVALUE|boolvalue|IDENTIFIER|expr) (',' parameter)*;
-
-type : 'numb'| 'boolean' | 'string';
-
-IDENTIFIER : [a-zA-Z_][a-zA-Z_0-9]*;
-NUMBVALUE :  [0-9]+;
-boolvalue : 'true'|'false';
-STRINGVALUE : '"text"';
-
-/* We're going to ignore all white space characters */
 WS: [ \n\t\r]+ -> skip;

@@ -1,7 +1,17 @@
-string a = "text";
-numb c = 10;
-numb e;
-boolean k = true;
-START
-string b = "text"; 
-END
+print 1+2;
+print 1/2;
+print 1*2;
+a = 1+2;
+example(a+b);
+method example(numb a,numb b)<-numb{
+a = c+d;
+return a;
+}
+if (a==b)
+{
+print a+b;
+}
+else
+{
+print a+b;
+}
