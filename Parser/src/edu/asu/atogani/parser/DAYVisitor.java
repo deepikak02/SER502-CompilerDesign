@@ -11,6 +11,18 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	/**
+	 * Visit a parse tree produced by {@link DAYParser#main_prog}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMain_prog(DAYParser.Main_progContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#main_block}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMain_block(DAYParser.Main_blockContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link DAYParser#prog}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -167,6 +179,13 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExpressionlist(DAYParser.ExpressionlistContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code ident1}
+	 * labeled alternative in {@link DAYParser#ident}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdent1(DAYParser.Ident1Context ctx);
 	/**
 	 * Visit a parse tree produced by {@link DAYParser#print}.
 	 * @param ctx the parse tree

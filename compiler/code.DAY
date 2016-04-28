@@ -2,16 +2,19 @@ print 1+2;
 print 1/2;
 print 1*2;
 a = 1+2;
-example(a+b);
-method example(numb a,numb b)<-numb{
+a = a+b;
+a=5;
+a=b;
+method example()<-numb{
 a = c+d;
 return a;
 }
-if (a==b)
-{
+START
+numb a;
+a=10;
+example(a,b,c);
 print a+b;
-}
-else
-{
-print a+b;
-}
+print 1;
+print a;
+print a<=b;
+END

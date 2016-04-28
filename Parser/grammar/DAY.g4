@@ -1,5 +1,9 @@
 grammar DAY;
 
+main_prog : prog main_block;
+
+main_block : 'START' statement* 'END';
+
 prog : ((statement) | (funcdeclaration))+;
 
 statement : print ';'
@@ -32,15 +36,18 @@ vardeclaration : 'numb' var2 = IDENTIFIER;
 
 assignment : var1 = IDENTIFIER '=' expr = expression;
 
-funcdeclaration : 'method' func = IDENTIFIER '(' params = paramdec ')' '<-' 'numb' '{' stat = statementlist 'return' ret = expression';' '}';
+funcdeclaration : 'method' func = IDENTIFIER '(' (params = paramdec) ')' '<-' 'numb' '{' stat = statementlist 'return' ret = expression';' '}';
 
 paramdec : vardeclaration (',' vardeclaration)*;
 
 statementlist : (statement )+;
 
-funccall : func = IDENTIFIER '(' args = expressionlist ')';
+funccall : func = IDENTIFIER '(' (args = expressionlist)? ')';
 
-expressionlist : expression (','expression)*;
+expressionlist : ident (',' ident)*;
+
+ident : id = IDENTIFIER #ident1
+	  ; 
 
 print : 'print' argument = expression ;
     	 

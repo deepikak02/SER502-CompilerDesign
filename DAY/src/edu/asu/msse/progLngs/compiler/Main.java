@@ -22,7 +22,7 @@ public class Main {
 		DAYLexer lexer = new DAYLexer(input);
 		CommonTokenStream tokens =  new CommonTokenStream(lexer);
 		DAYParser parser = new DAYParser(tokens);
-		ParseTree tree = parser.prog();
+		ParseTree tree = parser.main_prog();
 		create_interim_code(new MyVisitor().visit(tree));
 		//Create Tree
 		//createTree("code.DAY");
