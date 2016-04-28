@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
+import edu.asu.msse.progLngs.runtime.v2.SymbolTableEntry;
+
 /**
  * Class which tokenizes and executes each and every instruction
  */
@@ -130,26 +132,55 @@ public class Instruction {
 				else
 					currentBlockValues.getLocalvars().put(operand1, RunTime.strDefaultValue);
 				return;
+				
+			case "DECLst":
+				if (values.size() < 1)
+					throw new Exception("Invalid DECLst usage, usage must be DECLst <varName>");
+				operand1 = values.get(0).trim();
+				if (currentBlockValues == null)
+					RunTime.globalSymbolTable.put(operand1, new Stack());
+				else
+					currentBlockValues.getLocalvars().put(operand1, new Stack());
+				return;	
 
 			case "STOR":
 				if (values.size() < 2)
 					throw new Exception("Invalid STOR usage, usage must be STOR <varName>,<value>");
 				operand1 = values.get(0).trim();
 				operand2 = values.get(1).trim();
-				symblTbl = Instruction.getSymblTbl(currentBlockValues, operand1);
-				if (Pattern.matches("null|true|false|(-)?[0-9]+", operand2)) {
-					symblTbl.put(operand1, operand2);
-				} else if (Pattern.matches("\".*\"", operand2)) {
-					symblTbl.put(operand1, operand2.substring(1, operand2.length() - 1));
-				} else
-					symblTbl.put(operand1, Instruction.getSymblTbl(currentBlockValues, operand2).get(operand2));
+				if(operand1.contains("temp")){
+					int beginIndex = operand1.length()-1;
+					int regIndex = Integer.parseInt(operand1.substring(beginIndex))-1;
+					if (Pattern.matches("null|true|false|(-)?[0-9]+", operand2)) {
+						RunTime.tempRegisters[regIndex] = operand2;
+					} else if (Pattern.matches("\".*\"", operand2)) {
+						RunTime.tempRegisters[regIndex] = operand2.substring(1, operand2.length() - 1);
+					} else
+						RunTime.tempRegisters[regIndex] = Instruction.getSymblTbl(currentBlockValues, operand2).get(operand2).toString();
+				}	
+				else{
+					symblTbl = Instruction.getSymblTbl(currentBlockValues, operand1);
+					if (Pattern.matches("null|true|false|(-)?[0-9]+", operand2)) {
+						symblTbl.put(operand1, operand2);
+					} else if (Pattern.matches("\".*\"", operand2)) {
+						symblTbl.put(operand1, operand2.substring(1, operand2.length() - 1));
+					} else
+						symblTbl.put(operand1, Instruction.getSymblTbl(currentBlockValues, operand2).get(operand2));
+				}
+				
+				
 				return;
 
 			case "PRIN":
 				if (values.size() < 1)
 					System.out.print("");
 				operand1 = values.get(0).trim();
-				if (Pattern.matches("null|true|false|(-)?[0-9]+", operand1)) {
+				if(operand1.contains("temp")){
+					int beginIndex = operand1.length()-1;
+					int regIndex = Integer.parseInt(operand1.substring(beginIndex))-1;
+					System.out.print(RunTime.tempRegisters[regIndex]);
+				}	
+				else if (Pattern.matches("null|true|false|(-)?[0-9]+", operand1)) {
 					System.out.print(operand1);
 				} else if (Pattern.matches("\".*\"", operand1)) {
 					System.out.print(operand1.substring(1, operand1.length() - 1));
@@ -161,7 +192,12 @@ public class Instruction {
 				if (values.size() < 1)
 					System.out.print("");
 				operand1 = values.get(0).trim();
-				if (Pattern.matches("null|true|false|(-)?[0-9]+", operand1)) {
+				if(operand1.contains("temp")){
+					int beginIndex = operand1.length()-1;
+					int regIndex = Integer.parseInt(operand1.substring(beginIndex))-1;
+					System.out.println(RunTime.tempRegisters[regIndex]);
+				}	
+				else if (Pattern.matches("null|true|false|(-)?[0-9]+", operand1)) {
 					System.out.println(operand1);
 				} else if (Pattern.matches("\".*\"", operand1)) {
 					System.out.println(operand1.substring(1, operand1.length() - 1));
@@ -180,28 +216,69 @@ public class Instruction {
 				return;
 			
 			case "PUSH":
-				if(values.size()<1)throw new Exception("Invalid PUSH usage, usage must be PUSH <value>");
-				operand1 = values.get(0).trim();
-				if(operand1.contains("temp")){
-					int beginIndex = operand1.length()-1;
-					int regIndex = Integer.parseInt(operand1.substring(beginIndex))-1;
-					RunTime.tempStack.push(RunTime.tempRegisters[regIndex]);
+				if(values.size()<1)
+					throw new Exception("Invalid PUSH usage, usage must be PUSH <value>");
+				if(values.size() == 1){
+					operand1 = values.get(0).trim();
+					if(operand1.contains("temp")){
+						int beginIndex = operand1.length()-1;
+						int regIndex = Integer.parseInt(operand1.substring(beginIndex))-1;
+						RunTime.tempStack.push(RunTime.tempRegisters[regIndex]);
+					}else{
+						if (Pattern.matches("null|true|false|(-)?[0-9]+", operand1)) {
+							RunTime.tempStack.push(operand1);
+						} else if (Pattern.matches("\".*\"", operand1)) {
+							RunTime.tempStack.push(operand1.substring(1, operand1.length() - 1));
+						} else
+							RunTime.tempStack.push(Instruction.getSymblTbl(currentBlockValues, operand1).get(operand1));
+					}
 				}else{
-					if (Pattern.matches("null|true|false|(-)?[0-9]+", operand1)) {
-						RunTime.tempStack.push(operand1);
-					} else if (Pattern.matches("\".*\"", operand1)) {
-						RunTime.tempStack.push(operand1.substring(1, operand1.length() - 1));
-					} else
-						RunTime.tempStack.push(Instruction.getSymblTbl(currentBlockValues, operand1).get(operand1));
+					Stack<Integer> stack;
+					operand2 = values.get(1).trim();
+					if (currentBlockValues == null){
+						stack = (Stack<Integer>)RunTime.globalSymbolTable.get(operand2);
+					}			
+					else{
+						stack = (Stack<Integer>)currentBlockValues.getLocalvars().get(operand2);
+					}
+						
+					operand1 = values.get(0).trim();
+					if(operand1.contains("temp")){
+						int beginIndex = operand1.length()-1;
+						int regIndex = Integer.parseInt(operand1.substring(beginIndex))-1;
+						stack.push(Integer.parseInt(RunTime.tempRegisters[regIndex]));
+					}else{
+						if (Pattern.matches("(-)?[0-9]+", operand1)) {
+							stack.push(Integer.parseInt(operand1));
+						} else
+							stack.push(Integer.parseInt(Instruction.getSymblTbl(currentBlockValues, operand1).get(operand1).toString()));
+					}
 				}
+				
 				return;				
 				
 			case "POP":
-				if(values.size()<1)throw new Exception("Invalid POP usage, usage must be POP <varName>");
-				operand1 = values.get(0).trim();
-				Object value = RunTime.tempStack.pop();
-				currentBlockValues.getLocalvars().put(operand1, value);
-				return;
+				if(values.size()<1)
+					throw new Exception("Invalid POP usage, usage must be POP <varName>");
+				if(values.size() == 1){
+					operand1 = values.get(0).trim();
+					Object value = RunTime.tempStack.pop();
+					currentBlockValues.getLocalvars().put(operand1, value);
+				}else{
+					operand1 = values.get(0).trim();
+					operand2 = values.get(1).trim();
+					Stack stack;
+					if (currentBlockValues == null){
+						stack = (Stack<Integer>)RunTime.globalSymbolTable.get(operand2);
+					}			
+					else{
+						stack = (Stack<Integer>)currentBlockValues.getLocalvars().get(operand2);
+					}
+					Integer value = (Integer)stack.pop();
+					currentBlockValues.getLocalvars().put(operand1, value);
+					
+				}
+					return;
 			
 			case "RET":
 				if(values.size()<1)throw new Exception("Invalid RET usage, usage must be RET <varName>");

@@ -6,8 +6,6 @@ import java.util.Stack;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import edu.asu.msse.progLngs.runtime3.Data;
-import edu.asu.msse.progLngs.runtime3.Type;
 
 public class MyParser {
 	

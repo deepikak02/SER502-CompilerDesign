@@ -1,0 +1,12 @@
+FDEC output
+DECLst S
+PUSH 10,S
+PUSH 20,S
+PUSH 30,S
+DECLi a
+POP a,S
+PRIN a
+FEND
+FDEC MAIN
+FCALL output
+FEND

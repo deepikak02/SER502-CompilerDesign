@@ -65,11 +65,10 @@ public class RunTime {
 			
 		}*/
 		try{
-			
 			//String path = "E:\\Visu\\ASU\\SecondSem\\prgmngLangs\\LanguageDevelopment\\EclipseWorkspace\\DAY\\src\\edu\\asu\\msse\\progLngs\\intermediateCode\\";
 			String path = "C:\\Users\\deepika\\Documents\\GitHub\\SER502-CompilerDesign\\DAY\\src\\edu\\asu\\msse\\progLngs\\intermediateCode\\";
 			//String filename = filepath + args[0];
-			String filepath = path + "FactorialRecursion.dpp";
+			String filepath = path + "stack.dpp";
 			if(!(new File(filepath)).isFile())
 				throw new Exception(filepath + " file does not exist.");
 			
