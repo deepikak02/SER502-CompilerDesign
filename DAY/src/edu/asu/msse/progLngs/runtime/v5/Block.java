@@ -8,16 +8,14 @@ import edu.asu.msse.progLngs.runtime.v5.Instruction;
 
 
 /*
- * Every piece of code is a block - func, if, else, while etc
+ * Every piece of code is a block - method, while etc
  */
 
 public class Block {
 	
-	//private Block parentBlock;
 	private List<Instruction> instns;
 	
 	Block(){
-		//parentBlock = null;
 		instns = new ArrayList<Instruction>();
 	}
 	
@@ -31,7 +29,7 @@ public class Block {
 		while(itr.hasNext()){
 			instn = itr.next();	
 			instn.execute();
-			}
+		}
 	}
 
 }

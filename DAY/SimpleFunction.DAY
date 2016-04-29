@@ -1,0 +1,24 @@
+numb a;
+a = 10;
+numb b;
+method example(NO PARAM) <- numb
+{
+	numb o;
+	o = 69;
+	print o;
+	print a;
+	return o;
+}
+START
+	numb i;
+	i = 20;
+	b=a;
+	print a;
+	print b;
+	print i;
+	b = example(i);
+	print b;
+END
+
+
+ 

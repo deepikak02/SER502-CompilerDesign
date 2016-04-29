@@ -1,0 +1,3 @@
+START
+	print 2;
+END

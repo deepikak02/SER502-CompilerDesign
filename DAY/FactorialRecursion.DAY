@@ -1,0 +1,16 @@
+method fact(numb m) <- numb
+{
+	if(m<=1){
+		return m;
+	}	
+	else{
+		return (m * fact(m-1));
+	}	
+}
+START
+	numb x;
+	x = 5;
+	numb y;
+	y = fact(x);
+	print y;
+END

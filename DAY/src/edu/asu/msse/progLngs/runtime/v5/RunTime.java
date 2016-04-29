@@ -137,7 +137,7 @@ public class RunTime {
 			if(blocks.containsKey("MAIN")){
 				Block mainblock = blocks.get("MAIN");
 				//System.out.println(globalSymbolTable);
-				System.out.println(blocks);
+				//System.out.println(blocks);
 				//System.out.println(blocks.get("example").getLocalvars());
 				mainblock.execute();
 				//System.out.println(blocks.get("example").getLocalvars());

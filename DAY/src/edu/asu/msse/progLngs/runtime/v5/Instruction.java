@@ -7,8 +7,6 @@ import java.util.List;
 import java.util.Stack;
 import java.util.regex.Pattern;
 
-import edu.asu.msse.progLngs.runtime.v2.SymbolTableEntry;
-
 /**
  * Class which tokenizes and executes each and every instruction
  */
@@ -105,7 +103,7 @@ public class Instruction {
 
 			case "DECi":
 				if (values.size() < 1)
-					throw new Exception("Invalid DECi usage, usage must be DECLi <varName>");
+					throw new Exception("Invalid DECi usage, usage must be DECi <varName>");
 				operand1 = values.get(0).trim();
 				if (currentBlockValues == null)
 					RunTime.globalSymbolTable.put(operand1, new Integer(RunTime.intDefaultValue));
@@ -115,7 +113,7 @@ public class Instruction {
 
 			case "DECb":
 				if (values.size() < 1)
-					throw new Exception("Invalid DECb usage, usage must be DECLb <varName>");
+					throw new Exception("Invalid DECb usage, usage must be DECb <varName>");
 				operand1 = values.get(0).trim();
 				if (currentBlockValues == null)
 					RunTime.globalSymbolTable.put(operand1, new Boolean(RunTime.boolDefaultValue));
@@ -125,7 +123,7 @@ public class Instruction {
 
 			case "DECs":
 				if (values.size() < 1)
-					throw new Exception("Invalid DECs usage, usage must be DECLs <varName>");
+					throw new Exception("Invalid DECs usage, usage must be DECs <varName>");
 				operand1 = values.get(0).trim();
 				if (currentBlockValues == null)
 					RunTime.globalSymbolTable.put(operand1, RunTime.strDefaultValue);
@@ -135,7 +133,7 @@ public class Instruction {
 				
 			case "DECst":
 				if (values.size() < 1)
-					throw new Exception("Invalid DECst usage, usage must be DECLst <varName>");
+					throw new Exception("Invalid DECst usage, usage must be DECst <varName>");
 				operand1 = values.get(0).trim();
 				if (currentBlockValues == null)
 					RunTime.globalSymbolTable.put(operand1, new Stack());
@@ -149,46 +147,46 @@ public class Instruction {
 				operand1 = values.get(0).trim();
 				operand2 = values.get(1).trim();
 				if(operand1.contains("temp")){
-					int beginIndex = operand1.length()-1;
-					int regIndex = Integer.parseInt(operand1.substring(beginIndex))-1;
-					if (Pattern.matches("null|true|false|(-)?[0-9]+", operand2)) {
-						RunTime.tempRegisters[regIndex] = operand2;
-					} else if (Pattern.matches("\".*\"", operand2)) {
-						RunTime.tempRegisters[regIndex] = operand2.substring(1, operand2.length() - 1);
-					} else
-						RunTime.tempRegisters[regIndex] = Instruction.getSymblTbl(currentBlockValues, operand2).get(operand2).toString();
+					int beginIndex1 = operand1.length()-1;
+					int regIndex1 = Integer.parseInt(operand1.substring(beginIndex1))-1;
+					if(operand2.contains("temp")){
+						int beginIndex2 = operand2.length()-1;
+						int regIndex2 = Integer.parseInt(operand2.substring(beginIndex2))-1;
+						RunTime.tempRegisters[regIndex1] = RunTime.tempRegisters[regIndex2];  
+						
+					}	
+					else {
+						if (Pattern.matches("null|true|false|(-)?[0-9]+", operand2)) {
+							RunTime.tempRegisters[regIndex1] = operand2;
+						} else if (Pattern.matches("\".*\"", operand2)) {
+							RunTime.tempRegisters[regIndex1] = operand2.substring(1, operand2.length() - 1);
+						} else{
+							RunTime.tempRegisters[regIndex1] = Instruction.getSymblTbl(currentBlockValues, operand2).get(operand2).toString();
+						}
+					}
+						
 				}	
 				else{
 					symblTbl = Instruction.getSymblTbl(currentBlockValues, operand1);
-					if (Pattern.matches("null|true|false|(-)?[0-9]+", operand2)) {
-						symblTbl.put(operand1, operand2);
-					} else if (Pattern.matches("\".*\"", operand2)) {
-						symblTbl.put(operand1, operand2.substring(1, operand2.length() - 1));
-					} else
-						symblTbl.put(operand1, Instruction.getSymblTbl(currentBlockValues, operand2).get(operand2));
-				}
+					if(operand2.contains("temp")){
+						int beginIndex2 = operand2.length()-1;
+						int regIndex2 = Integer.parseInt(operand2.substring(beginIndex2))-1;  
+						symblTbl.put(operand1, RunTime.tempRegisters[regIndex2]);
+					}		
+					else{
+						if (Pattern.matches("null|true|false|(-)?[0-9]+", operand2)) {
+							symblTbl.put(operand1, operand2);
+						} else if (Pattern.matches("\".*\"", operand2)) {
+							symblTbl.put(operand1, operand2.substring(1, operand2.length() - 1));
+						} else
+							symblTbl.put(operand1, Instruction.getSymblTbl(currentBlockValues, operand2).get(operand2));
+						}
+					}
 				
 				
 				return;
 
 			case "PRIN":
-				if (values.size() < 1)
-					System.out.print("");
-				operand1 = values.get(0).trim();
-				if(operand1.contains("temp")){
-					int beginIndex = operand1.length()-1;
-					int regIndex = Integer.parseInt(operand1.substring(beginIndex))-1;
-					System.out.print(RunTime.tempRegisters[regIndex]);
-				}	
-				else if (Pattern.matches("null|true|false|(-)?[0-9]+", operand1)) {
-					System.out.print(operand1);
-				} else if (Pattern.matches("\".*\"", operand1)) {
-					System.out.print(operand1.substring(1, operand1.length() - 1));
-				} else
-					System.out.print(Instruction.getSymblTbl(currentBlockValues, operand1).get(operand1));
-				return;
-
-			/*case "PRINLN":
 				if (values.size() < 1)
 					System.out.print("");
 				operand1 = values.get(0).trim();
@@ -203,7 +201,7 @@ public class Instruction {
 					System.out.println(operand1.substring(1, operand1.length() - 1));
 				} else
 					System.out.println(Instruction.getSymblTbl(currentBlockValues, operand1).get(operand1));
-				return;*/
+				return;
 
 			case "FDEC":
 				BlockValues newBlockValues = new BlockValues();
