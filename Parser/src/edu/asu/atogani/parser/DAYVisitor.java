@@ -88,6 +88,13 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNumb(DAYParser.NumbContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code Ret_func}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRet_func(DAYParser.Ret_funcContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Div}
 	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
@@ -102,6 +109,13 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLessThan(DAYParser.LessThanContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code str1}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStr1(DAYParser.Str1Context ctx);
+	/**
 	 * Visit a parse tree produced by the {@code Gthan}
 	 * labeled alternative in {@link DAYParser#expression}.
 	 * @param ctx the parse tree
@@ -115,6 +129,13 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVariable(DAYParser.VariableContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code boolean1}
+	 * labeled alternative in {@link DAYParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBoolean1(DAYParser.Boolean1Context ctx);
 	/**
 	 * Visit a parse tree produced by the {@code NEQ}
 	 * labeled alternative in {@link DAYParser#expression}.
@@ -143,6 +164,42 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitMinus(DAYParser.MinusContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#stack_declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStack_declaration(DAYParser.Stack_declarationContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#stack_push}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStack_push(DAYParser.Stack_pushContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#stack_pop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStack_pop(DAYParser.Stack_popContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#while_loop}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhile_loop(DAYParser.While_loopContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#cond_while}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCond_while(DAYParser.Cond_whileContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#while_list}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhile_list(DAYParser.While_listContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link DAYParser#vardeclaration}.
 	 * @param ctx the parse tree
@@ -193,9 +250,22 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitIdent1(DAYParser.Ident1Context ctx);
 	/**
+	 * Visit a parse tree produced by the {@code expr1}
+	 * labeled alternative in {@link DAYParser#ident}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExpr1(DAYParser.Expr1Context ctx);
+	/**
 	 * Visit a parse tree produced by {@link DAYParser#print}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitPrint(DAYParser.PrintContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link DAYParser#bool_val}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBool_val(DAYParser.Bool_valContext ctx);
 }

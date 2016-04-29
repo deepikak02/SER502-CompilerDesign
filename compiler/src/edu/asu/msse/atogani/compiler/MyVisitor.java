@@ -14,8 +14,12 @@ import org.antlr.v4.runtime.tree.ParseTree;
 
 import edu.asu.atogani.parser.DAYBaseVisitor;
 import edu.asu.atogani.parser.DAYParser.AssignmentContext;
+import edu.asu.atogani.parser.DAYParser.Bool_valContext;
+import edu.asu.atogani.parser.DAYParser.Boolean1Context;
+import edu.asu.atogani.parser.DAYParser.Cond_whileContext;
 import edu.asu.atogani.parser.DAYParser.DivContext;
 import edu.asu.atogani.parser.DAYParser.EQContext;
+import edu.asu.atogani.parser.DAYParser.Expr1Context;
 import edu.asu.atogani.parser.DAYParser.ExpressionlistContext;
 import edu.asu.atogani.parser.DAYParser.Func_call_exprContext;
 import edu.asu.atogani.parser.DAYParser.FunccallContext;
@@ -36,14 +40,22 @@ import edu.asu.atogani.parser.DAYParser.ParamdecContext;
 import edu.asu.atogani.parser.DAYParser.PlusContext;
 import edu.asu.atogani.parser.DAYParser.PrintContext;
 import edu.asu.atogani.parser.DAYParser.ProgContext;
+import edu.asu.atogani.parser.DAYParser.Ret_funcContext;
 import edu.asu.atogani.parser.DAYParser.Return1Context;
 import edu.asu.atogani.parser.DAYParser.SelectionContext;
+import edu.asu.atogani.parser.DAYParser.Stack_declarationContext;
+import edu.asu.atogani.parser.DAYParser.Stack_popContext;
+import edu.asu.atogani.parser.DAYParser.Stack_pushContext;
+import edu.asu.atogani.parser.DAYParser.Str1Context;
 import edu.asu.atogani.parser.DAYParser.VardeclarationContext;
 import edu.asu.atogani.parser.DAYParser.VariableContext;
+import edu.asu.atogani.parser.DAYParser.While_listContext;
+import edu.asu.atogani.parser.DAYParser.While_loopContext;
 
 public class MyVisitor extends DAYBaseVisitor <String>{
 	
 	private int selcounter = 0;
+	private int whilecounter = 0;
 	private Map<String, Integer> variables = new HashMap <>();
 	
 	@Override
@@ -58,6 +70,21 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 	@Override
 	public String visitProg(ProgContext ctx) {
 		return visitChildren(ctx);
+	}
+	
+	@Override
+	public String visitStack_declaration(Stack_declarationContext ctx) {
+		return "DECst " + ctx.var.getText();
+	}
+	
+	@Override
+	public String visitStack_push(Stack_pushContext ctx) {
+		return "PUSH " + ctx.val.getText() + "," + ctx.var.getText();
+	}
+	
+	@Override
+	public String visitStack_pop(Stack_popContext ctx) {
+		return "POP " + ctx.var2.getText() + "," + ctx.var.getText();
 	}
 	
 	@Override
@@ -100,11 +127,20 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 				result = "ERR Cannot be printed";
 			}
 			else if (child instanceof NumbContext) {
-				result = "STOR temp1,"+instructions+"\r\n"+"PRIN temp1";
+				result = "PRIN "+instructions;
 			}
 			else if (child instanceof VariableContext) {
-				result = "STOR temp1,"+instructions+"\r\n"+"PRIN temp1";
+				result = "PRIN "+instructions;
 			}
+			else if (child instanceof Str1Context)
+			{
+				result = "PRIN "+instructions;
+			}
+			else if (child instanceof Boolean1Context)
+			{
+				result = "PRIN "+instructions;
+			}
+			
 		}
 		return result;
 	}
@@ -141,9 +177,36 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 	}
 	
 	@Override
+	public String visitBoolean1(Boolean1Context ctx) {
+		return ctx.bool1.getText();
+	}
+	
+	@Override
+	public String visitStr1(Str1Context ctx) {
+		return ctx.str.getText();
+	}
+	
+	@Override
+	public String visitRet_func(Ret_funcContext ctx) {
+		String args = visit(ctx.right1);
+		return args + "\r\nMUL temp1," + ctx.left1.getText() + ",temp1";
+	}
+	
+	@Override
 	public String visitVardeclaration(VardeclarationContext ctx) {
 		variables.put(ctx.var2.getText(),variables.size());
-		return "DECi "+ ctx.var2.getText();
+		if(ctx.getChild(0).getText().equals("numb"))
+		{
+			return "DECi "+ ctx.var2.getText();
+		}
+		else if(ctx.getChild(0).getText().equals("bool"))
+		{
+			return "DECb "+ ctx.var2.getText();
+		}
+		else
+		{
+			return "DECs "+ ctx.var2.getText();
+		}
 	}
 	
 	@Override
@@ -156,6 +219,16 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 		}
 		else if (child instanceof VariableContext) {
 			result = "STOR "+ctx.var1.getText()+","+instructions;
+		}
+		else if (child instanceof Boolean1Context) {
+			result = "STOR "+ctx.var1.getText()+","+instructions;
+		}
+		else if (child instanceof Str1Context) {
+			result = "STOR "+ctx.var1.getText()+","+instructions;
+		}
+		else if (child instanceof Func_call_exprContext)
+		{
+			result = instructions + "\r\nPOP a";
 		}
 		else{
 			result = instructions+"\r\n"+"STOR " + ctx.var1.getText() +",temp1";
@@ -189,6 +262,9 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 			{
 				result = result + "";
 			}
+			else if(child instanceof Expr1Context){
+				result = result + instructions + "\r\n" + "PUSH temp1\r\n";
+			}
 			else{
 				result = result + "PUSH " + instructions + "\r\n";
 			}
@@ -199,6 +275,11 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 	@Override
 	public String visitIdent1(Ident1Context ctx) {
 		return ctx.id.getText();
+	}
+	
+	@Override
+	public String visitExpr1(Expr1Context ctx) {
+		return visit(ctx.exp1);
 	}
 	
 	@Override
@@ -246,7 +327,19 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 			else if (child instanceof VariableContext) {
 				result = "RET " +instructions+"\r\n";
 			}
-			
+			else if (child instanceof Boolean1Context ) {
+				result = "RET " +instructions+"\r\n";
+			}
+			else if (child instanceof Str1Context ) {
+				result = "RET " +instructions+"\r\n";
+			}
+			else if (child instanceof Func_call_exprContext ) {
+				result = instructions;
+			}
+			else if (child instanceof Ret_funcContext)
+			{
+				result = instructions;
+			}
 		}
 		return result;
 	}
@@ -281,6 +374,25 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 		}
 		return result+"\r\n";
 		}
+	}
+	
+	@Override
+	public String visitWhile_loop(While_loopContext ctx) {
+		String condInst = visit(ctx.list1);
+		String statList = visit(ctx.list2);
+		int whileNum = whilecounter;
+		++whilecounter;
+		return "LOOP L" + whileNum + "\r\n" + statList + "\r\n" + condInst + "\r\n" + "IFT" + "\r\n" + "JMP L" + whileNum + "\r\nENDL" + "\r\n" + condInst + "\r\n" + "IFT" + "\r\n" + "JMP L" + whileNum + "\r\nENDC";
+	}
+	
+	@Override
+	public String visitCond_while(Cond_whileContext ctx) {
+		return visitChildren(ctx);
+	}
+	
+	@Override
+	public String visitWhile_list(While_listContext ctx) {
+		return visitChildren(ctx);
 	}
 	
 	@Override

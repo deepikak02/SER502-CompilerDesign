@@ -1,17 +1,14 @@
-a = 1+2;
-a = a+b;
-a=-5;
-a=b;
-method example(NO PARAM)<-numb{
-a = c+d;
-return a>b;
-}
+bool a;
+a = true;
+string b;
+b = "Hey";
 START
-numb a;
-a=10;
-example(a,b,c);
-print a+b;
-print 1;
-print a;
-print a<=b;
+while (i<10)
+{
+i=i+1;
+print i;
+}
+stack s;
+s.push(a);
+s.pop(b);
 END
