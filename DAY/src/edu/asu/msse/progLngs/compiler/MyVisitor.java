@@ -1,45 +1,36 @@
-package edu.asu.atogani.compiler;
+package edu.asu.msse.progLngs.compiler;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 
-import edu.asu.atogani.parser.DAYBaseVisitor;
-import edu.asu.atogani.parser.DAYParser.AssignmentContext;
-import edu.asu.atogani.parser.DAYParser.DivContext;
-import edu.asu.atogani.parser.DAYParser.EQContext;
-import edu.asu.atogani.parser.DAYParser.ExpressionlistContext;
-import edu.asu.atogani.parser.DAYParser.Func_call_exprContext;
-import edu.asu.atogani.parser.DAYParser.FunccallContext;
-import edu.asu.atogani.parser.DAYParser.FuncdeclarationContext;
-import edu.asu.atogani.parser.DAYParser.GThanEContext;
-import edu.asu.atogani.parser.DAYParser.GthanContext;
-import edu.asu.atogani.parser.DAYParser.Ident1Context;
-//import edu.asu.atogani.parser.DAYParser.Ident_paramContext;
-import edu.asu.atogani.parser.DAYParser.LessThanContext;
-import edu.asu.atogani.parser.DAYParser.LessThanEContext;
-import edu.asu.atogani.parser.DAYParser.Main_blockContext;
-import edu.asu.atogani.parser.DAYParser.Main_progContext;
-import edu.asu.atogani.parser.DAYParser.MinusContext;
-import edu.asu.atogani.parser.DAYParser.MulContext;
-import edu.asu.atogani.parser.DAYParser.NEQContext;
-import edu.asu.atogani.parser.DAYParser.NumbContext;
-import edu.asu.atogani.parser.DAYParser.ParamdecContext;
-import edu.asu.atogani.parser.DAYParser.PlusContext;
-import edu.asu.atogani.parser.DAYParser.PrintContext;
-import edu.asu.atogani.parser.DAYParser.ProgContext;
-import edu.asu.atogani.parser.DAYParser.Return1Context;
-import edu.asu.atogani.parser.DAYParser.SelectionContext;
-import edu.asu.atogani.parser.DAYParser.VardeclarationContext;
-import edu.asu.atogani.parser.DAYParser.VariableContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.AssignmentContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.DivContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.EQContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.ExpressionlistContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.Func_call_exprContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.FunccallContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.FuncdeclarationContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.GThanEContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.GthanContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.Ident1Context;
+import edu.asu.msse.progLngs.compiler.DAYParser.LessThanContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.LessThanEContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.Main_blockContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.Main_progContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.MinusContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.MulContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.NEQContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.NumbContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.ParamdecContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.PlusContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.PrintContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.ProgContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.Return1Context;
+import edu.asu.msse.progLngs.compiler.DAYParser.SelectionContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.VardeclarationContext;
+import edu.asu.msse.progLngs.compiler.DAYParser.VariableContext;
 
 public class MyVisitor extends DAYBaseVisitor <String>{
 	

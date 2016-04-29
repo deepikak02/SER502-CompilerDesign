@@ -103,9 +103,9 @@ public class Instruction {
 			case "PEND":
 				return;
 
-			case "DECLi":
+			case "DECi":
 				if (values.size() < 1)
-					throw new Exception("Invalid DECLi usage, usage must be DECLi <varName>");
+					throw new Exception("Invalid DECi usage, usage must be DECLi <varName>");
 				operand1 = values.get(0).trim();
 				if (currentBlockValues == null)
 					RunTime.globalSymbolTable.put(operand1, new Integer(RunTime.intDefaultValue));
@@ -113,9 +113,9 @@ public class Instruction {
 					currentBlockValues.getLocalvars().put(operand1, new Integer(RunTime.intDefaultValue));
 				return;
 
-			case "DECLb":
+			case "DECb":
 				if (values.size() < 1)
-					throw new Exception("Invalid DECLb usage, usage must be DECLb <varName>");
+					throw new Exception("Invalid DECb usage, usage must be DECLb <varName>");
 				operand1 = values.get(0).trim();
 				if (currentBlockValues == null)
 					RunTime.globalSymbolTable.put(operand1, new Boolean(RunTime.boolDefaultValue));
@@ -123,9 +123,9 @@ public class Instruction {
 					currentBlockValues.getLocalvars().put(operand1, new Boolean(RunTime.boolDefaultValue));
 				return;
 
-			case "DECLs":
+			case "DECs":
 				if (values.size() < 1)
-					throw new Exception("Invalid DECLs usage, usage must be DECLs <varName>");
+					throw new Exception("Invalid DECs usage, usage must be DECLs <varName>");
 				operand1 = values.get(0).trim();
 				if (currentBlockValues == null)
 					RunTime.globalSymbolTable.put(operand1, RunTime.strDefaultValue);
@@ -133,9 +133,9 @@ public class Instruction {
 					currentBlockValues.getLocalvars().put(operand1, RunTime.strDefaultValue);
 				return;
 				
-			case "DECLst":
+			case "DECst":
 				if (values.size() < 1)
-					throw new Exception("Invalid DECLst usage, usage must be DECLst <varName>");
+					throw new Exception("Invalid DECst usage, usage must be DECLst <varName>");
 				operand1 = values.get(0).trim();
 				if (currentBlockValues == null)
 					RunTime.globalSymbolTable.put(operand1, new Stack());
@@ -188,7 +188,7 @@ public class Instruction {
 					System.out.print(Instruction.getSymblTbl(currentBlockValues, operand1).get(operand1));
 				return;
 
-			case "PRINLN":
+			/*case "PRINLN":
 				if (values.size() < 1)
 					System.out.print("");
 				operand1 = values.get(0).trim();
@@ -203,7 +203,7 @@ public class Instruction {
 					System.out.println(operand1.substring(1, operand1.length() - 1));
 				} else
 					System.out.println(Instruction.getSymblTbl(currentBlockValues, operand1).get(operand1));
-				return;
+				return;*/
 
 			case "FDEC":
 				BlockValues newBlockValues = new BlockValues();

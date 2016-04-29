@@ -56,45 +56,45 @@ public class RunTime {
 	/**
 	 * function checks the file and passes it to RunTime.parser function
 	 */
-	public static void main(String args[]){
+	/*public static void run(String filepath){
 		
-		/*
+		
 		 * if (args.length < 1) {
 			System.out.println("Usage: java RunTime <file.dpp>");			
 			return;
 			
-		}*/
+		}
 		try{
 			//String path = "E:\\Visu\\ASU\\SecondSem\\prgmngLangs\\LanguageDevelopment\\EclipseWorkspace\\DAY\\src\\edu\\asu\\msse\\progLngs\\intermediateCode\\";
-			String path = "C:\\Users\\deepika\\Documents\\GitHub\\SER502-CompilerDesign\\DAY\\src\\edu\\asu\\msse\\progLngs\\intermediateCode\\";
+			//String path = "C:\\Users\\deepika\\Documents\\GitHub\\SER502-CompilerDesign\\DAY\\src\\edu\\asu\\msse\\progLngs\\intermediateCode\\";
 			//String filename = filepath + args[0];
-			String filepath = path + "stack.dpp";
-			if(!(new File(filepath)).isFile())
-				throw new Exception(filepath + " file does not exist.");
+			//String filepath = path + "stack.dpp";
+			//if(!(new File(filepath)).isFile())
+				//throw new Exception(filepath + " file does not exist.");
 			
-			fileParser(filepath);			
+			//fileParser(filepath);			
 		}
 		catch(Exception e){
 			
 			System.out.println(e.toString());
 		}		
-	}
+	}*/
 	
 	
 	/**
 	 * function parses the file, stores global variables and function references 
 	 */
-	public static void fileParser(String filepath){	
+	public static void run(String code){	
 		
 		try{	
 			
-			BufferedReader br = new BufferedReader(new FileReader(filepath));
-			String currentLine=null;
+			//BufferedReader br = new BufferedReader(new FileReader(filepath));
+			//String currentLine=null;
 			Block newBlock = null;
 			boolean funcScope = false;	
-			
-			while((currentLine=br.readLine())!=null){
-				
+			String[] lines = code.split("\n");
+			//while(currentLine!=null){
+			for(String currentLine: lines){
 				currentLine=currentLine.trim();
 				Instruction instn = new Instruction(currentLine);
 				String keyword = instn.getInstruction();
@@ -129,7 +129,7 @@ public class RunTime {
 					funcScope = false;					
 				}								
 			}
-			if(br!=null) br.close();
+			//if(br!=null) br.close();
 			
 			/**
 			 * start execution from main block
