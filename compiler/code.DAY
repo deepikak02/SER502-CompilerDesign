@@ -4,7 +4,7 @@ a=-5;
 a=b;
 method example(NO PARAM)<-numb{
 a = c+d;
-return a>b;
+return ;
 }
 START
 numb a;
