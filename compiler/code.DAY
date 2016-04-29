@@ -1,13 +1,10 @@
-print 1+2;
-print 1/2;
-print 1*2;
 a = 1+2;
 a = a+b;
-a=5;
+a=-5;
 a=b;
-method example()<-numb{
+method example(NO PARAM)<-numb{
 a = c+d;
-return a;
+return a>b;
 }
 START
 numb a;

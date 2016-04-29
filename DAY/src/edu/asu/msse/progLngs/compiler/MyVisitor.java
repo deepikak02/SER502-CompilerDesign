@@ -36,6 +36,7 @@ import edu.asu.atogani.parser.DAYParser.ParamdecContext;
 import edu.asu.atogani.parser.DAYParser.PlusContext;
 import edu.asu.atogani.parser.DAYParser.PrintContext;
 import edu.asu.atogani.parser.DAYParser.ProgContext;
+import edu.asu.atogani.parser.DAYParser.Return1Context;
 import edu.asu.atogani.parser.DAYParser.SelectionContext;
 import edu.asu.atogani.parser.DAYParser.VardeclarationContext;
 import edu.asu.atogani.parser.DAYParser.VariableContext;
@@ -201,23 +202,73 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 	}
 	
 	@Override
+	public String visitReturn1(Return1Context ctx) {
+		String result = "";
+		for(int i = 0; i < ctx.getChildCount(); ++i) {
+			ParseTree child = ctx.getChild(i);
+			String instructions = visit(child);
+			if (child instanceof PlusContext) {
+				result = instructions + "\r\n" + "RET temp1";
+			} 
+			else if (child instanceof MinusContext) {
+				result = instructions + "\r\n" + "RET temp1";
+			}
+			else if (child instanceof MulContext) {
+				result = instructions + "\r\n" + "RET temp1";
+			}
+			else if (child instanceof DivContext) {
+				result = instructions + "\r\n" + "RET temp1";
+			}
+			else if (child instanceof PlusContext) {
+				result = instructions + "\r\n" + "RET temp1";
+			}
+			else if (child instanceof LessThanContext) {
+				result = "ERR Cannot be returned";
+			}
+			else if (child instanceof LessThanEContext) {
+				result = "ERR Cannot be returned";
+			}
+			else if (child instanceof GthanContext) {
+				result = "ERR Cannot be returned";
+			}
+			else if (child instanceof GThanEContext) {
+				result = "ERR Cannot be returned";
+			}
+			else if (child instanceof EQContext) {
+				result = "ERR Cannot be returned";
+			}
+			else if (child instanceof NEQContext) {
+				result = "ERR Cannot be returned";
+			}
+			else if (child instanceof NumbContext) {
+				result = "RET " +instructions+"\r\n";
+			}
+			else if (child instanceof VariableContext) {
+				result = "RET " +instructions+"\r\n";
+			}
+			else if (child instanceof AssignmentContext){
+				result = instructions + "RET " + ctx.getChild(i).getText();
+			}
+		}
+		return result;
+	}
+	@Override
 	public String visitFuncdeclaration(FuncdeclarationContext ctx) {
 		String state_list = visit(ctx.stat);
-		return "FDEC " + ctx.func.getText()+"\r\n" + visit(ctx.params) + 
-				(state_list == null ? "" : state_list + "\r\n")+ "RET " + visit(ctx.ret) + "\r\nFEND";
+		return "FDEC " + ctx.func.getText()+ visit(ctx.params) + 
+				(state_list == null ? "" : state_list + "\r\n")+ "FEND";
 	}
 	
 	@Override
 	public String visitParamdec(ParamdecContext ctx) {
 		int a = ctx.getChildCount();
 		String result = "";
-		if (ctx.getChildCount()<1)
+		if (ctx.getChild(0).getText().equals("NO PARAM"))
 		{
-			result="\r\n";
+			result=result + "\r\n";
 			return result;
 		}
 		else{
-		
 		for(int i = 0; i < a; i++)
 		{
 			if(ctx.getChild(i).getText().equals(","))
@@ -227,11 +278,10 @@ public class MyVisitor extends DAYBaseVisitor <String>{
 			else{
 				String a1 = ctx.getChild(i).getText();
 				String a2 = a1.replace("numb","");
-				result = result + "POP " + a2 + "\r\n";
+				result = result+ "\r\nPOP " + a2;
 			}
-			
 		}
-		return result;
+		return result+"\r\n";
 		}
 	}
 	

@@ -35,6 +35,12 @@ public interface DAYVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(DAYParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link DAYParser#return1}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitReturn1(DAYParser.Return1Context ctx);
+	/**
 	 * Visit a parse tree produced by {@link DAYParser#selection}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

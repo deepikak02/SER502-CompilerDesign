@@ -4,14 +4,17 @@ main_prog : prog main_block;
 
 main_block : 'START' statement* 'END';
 
-prog : ((statement) | (funcdeclaration))+;
+prog : ((vardeclaration ';') | (funcdeclaration) | (assignment ';'))+;
 
 statement : print ';'
 		  | vardeclaration ';'
 		  | assignment ';'
 		  | funccall ';'
 		  | selection
+		  | return1
 		  ;
+
+return1 : 'return' ret = expression';';
 
 selection : 'if' '(' condition = expression ')' onTrue = block 'else' onFalse = block ;
 
@@ -36,9 +39,9 @@ vardeclaration : 'numb' var2 = IDENTIFIER;
 
 assignment : var1 = IDENTIFIER '=' expr = expression;
 
-funcdeclaration : 'method' func = IDENTIFIER '(' (params = paramdec) ')' '<-' 'numb' '{' stat = statementlist 'return' ret = expression';' '}';
+funcdeclaration : 'method' func = IDENTIFIER '(' (params = paramdec)? ')' '<-' 'numb' '{' stat = statementlist '}';
 
-paramdec : vardeclaration (',' vardeclaration)*;
+paramdec : (vardeclaration (',' vardeclaration)*) | 'NO PARAM' ;
 
 statementlist : (statement )+;
 
@@ -52,7 +55,7 @@ ident : id = IDENTIFIER #ident1
 print : 'print' argument = expression ;
     	 
 IDENTIFIER : [_a-zA-Z][a-zA-Z_0-9]* ; 	 
-NUMBER : [0-9]+;
+NUMBER : ('-')?[0-9]+;
 STRING : '"' .*? '"';
 
 WS: [ \n\t\r]+ -> skip;
